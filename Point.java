@@ -23,8 +23,8 @@ public class Point {
         return new Point(x + v.getDX(), y + v.getDY(), z + v.getDZ());
     }
 
-    public Vector add(Point p) {
-        return new Vector(x + p.getX(), y + p.getY(), z + p.getZ());
+    public Vector subtract(Point p) {
+        return new Vector(x - p.getX(), y - p.getY(), z - p.getZ());
     }
 
 }
