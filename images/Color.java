@@ -1,5 +1,7 @@
+package images;
+
 public class Color {
-    double r, g, b;
+    private double r, g, b;
 
     public Color(double r, double g, double b) {
         this.r = r;

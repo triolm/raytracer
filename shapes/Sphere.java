@@ -1,3 +1,11 @@
+package shapes;
+import geometry.Intersection;
+import geometry.Point;
+import geometry.Ray;
+import geometry.Vector;
+import mesh.Material;
+import mesh.Surface;
+
 /**
  * Represents a sphere in 3D space.
  * 

@@ -1,3 +1,9 @@
+import geometry.Point;
+import geometry.Vector;
+import mesh.Surface;
+import shapes.Sphere;
+import shapes.Triangle;
+import shapes.Ring;
 
 /**
  * Details the static methods to creating various scenes for use in the
@@ -34,6 +40,27 @@ public class SceneCreator {
                 new Point(-3000, -5, -1000),
                 null);
         s.addSurface(floor);
+
+        return s;
+    }
+
+    public static Scene scene2(double xResolution, double yResolution) {
+        Camera cam = new Camera(new Point(0, 0, 0), // camera location
+                new Vector(0, 0, -1), // forward vector/view direction
+                new Vector(0, 1, 0), // up vector
+                20, // field of view
+                xResolution / yResolution); // aspect ratio
+        Scene s = new Scene(cam);
+
+        // Each sphere takes a Point (its center), the radius, and a material.
+        // For now, since we have not implemented the Material classes, we simply say
+        // they are null.
+        Surface s1 = new Sphere(new Point(4, 4, -30), 2, null);
+        s.addSurface(s1);
+        Surface s2 = new Sphere(new Point(-4, -4, -25), 2, null);
+        s.addSurface(s2);
+        Surface s3 = new Ring(new Point(0, 0, -25), 3, 1, cam.getForward(), null);
+        s.addSurface(s3);
 
         return s;
     }

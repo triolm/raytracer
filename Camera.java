@@ -1,3 +1,6 @@
+import geometry.Point;
+import geometry.Ray;
+import geometry.Vector;
 
 public class Camera {
     Point position;
@@ -28,5 +31,9 @@ public class Camera {
         Point ipp = imagePlanePoint(u, v);
         Vector rayVector = ipp.subtract(position);
         return new Ray(position, rayVector);
+    }
+
+    public Vector getForward(){
+        return this.forward;
     }
 }

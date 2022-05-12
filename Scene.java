@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+import geometry.Intersection;
+import geometry.Ray;
+import images.Color;
+import images.ColorImage;
+import mesh.Surface;
+
 public class Scene {
     private Camera camera;
     private ArrayList<Surface> surfaces;

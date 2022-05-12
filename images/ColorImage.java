@@ -1,5 +1,7 @@
+package images;
+
 public class ColorImage {
-    public Color[][] grid;
+    private Color[][] grid;
 
     public ColorImage(int width, int height) {
         grid = new Color[width][height];

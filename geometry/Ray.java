@@ -1,6 +1,8 @@
+package geometry;
+
 public class Ray {
-    Point point;
-    Vector vector;
+    private Point point;
+    private Vector vector;
 
     public Ray(Point p, Vector v) {
         point = p;

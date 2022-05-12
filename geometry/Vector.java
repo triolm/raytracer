@@ -1,3 +1,4 @@
+package geometry;
 public class Vector {
     private double dx, dy, dz;
 

@@ -1,8 +1,12 @@
+package geometry;
+
+import mesh.Material;
+
 public class Intersection {
-    Point pos;
-    Vector norm;
-    double dist;
-    Material material;
+    private Point pos;
+    private Vector norm;
+    private double dist;
+    private Material material;
 
     public Intersection(Point pos, Vector norm, double dist, Material material) {
         this.pos = pos;

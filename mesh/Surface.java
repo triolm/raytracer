@@ -1,3 +1,7 @@
+package mesh;
+import geometry.Intersection;
+import geometry.Ray;
+
 public abstract class Surface {
     public Surface() {
 

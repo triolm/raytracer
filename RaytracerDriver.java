@@ -1,5 +1,8 @@
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+
+import images.ColorImage;
+
 import java.io.File;
 
 /**
@@ -18,7 +21,7 @@ public class RaytracerDriver {
         // methods to select
         // which scene to render.
         System.out.println("Creating scene...");
-        Scene s = SceneCreator.scene1(xResolution, yResolution);
+        Scene s = SceneCreator.scene2(xResolution, yResolution);
 
         // Render the scene into a ColorImage
         System.out.println("Rendering image...");
@@ -26,7 +29,7 @@ public class RaytracerDriver {
 
         // Save the image out as a png
         System.out.println("Saving file...");
-        String filename = "output/scene1.png";
+        String filename = "_output/scene1.png";
         saveImage(filename, image);
 
         /*

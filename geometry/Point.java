@@ -1,3 +1,4 @@
+package geometry;
 public class Point {
     private double x, y, z;
 
