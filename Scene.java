@@ -1,18 +1,24 @@
 import java.util.ArrayList;
-
 import geometry.Intersection;
 import geometry.Ray;
 import images.Color;
 import images.ColorImage;
 import mesh.Surface;
+import lights.*;
 
 public class Scene {
     private Camera camera;
     private ArrayList<Surface> surfaces;
+    private ArrayList<Light> lights;
 
     public Scene(Camera camera) {
         this.camera = camera;
         surfaces = new ArrayList<Surface>();
+        lights = new ArrayList<Light>();
+    }
+
+    public void addLight(Light li) {
+        lights.add(li);
     }
 
     public void setCamera(Camera newCam) {
@@ -21,6 +27,40 @@ public class Scene {
 
     public void addSurface(Surface s) {
         surfaces.add(s);
+    }
+
+    public Color computeVisibleColor(Ray r) {
+        Intersection smallest = null;
+        for (Surface i : surfaces) {
+            Intersection sect = i.intersect(r);
+            if (sect != null && (smallest == null || sect.getDistance() < smallest.getDistance())) {
+                smallest = sect;
+            }
+        }
+        Color c = new Color(0, 0, 0);
+        if (smallest == null) {
+            return c;
+        }
+        for (Light i : lights) {
+            c = c.tint((smallest.getMaterial().computeLighting(smallest, r, i)));
+        }
+        return c;
+
+        /**
+         * First, run through the list of surfaces looking for intersections using the
+         * intersect method. Some will be null, indicating there wasn't a collision,
+         * while some will return a valid intersection object. As you are iterating
+         * through the list, keep track of & store the closest intersection, which is
+         * the one with the smallest distance.
+         * Next, once you have made it all the way through the list, if there were no
+         * valid intersections, return the color black.
+         * Otherwise, we have now selected one intersection which is the closest to the
+         * ray's origin. Create a new color as black. For each light in the list of
+         * lights, calculate the intersection point's lighting using the computeLighting
+         * method we wrote in phase 4, and then tint your new black color by this
+         * amount, updating the color each time. When you have made it through the
+         * entire list of lights, return the new color as the final color for this ray.
+         */
     }
 
     public ColorImage render(int xRes, int yRes) {
@@ -34,7 +74,7 @@ public class Scene {
                 for (Surface i : surfaces) {
                     Intersection sect = i.intersect(ray);
                     if (sect != null) {
-                        img.setColor(x, y, new Color(1, 1, 1));
+                        img.setColor(x, y, computeVisibleColor(ray));
                     }
                 }
             }

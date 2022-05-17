@@ -13,6 +13,7 @@ import java.io.File;
  */
 public class RaytracerDriver {
     public static void main(String[] args) {
+        long time = System.currentTimeMillis();
         // Size of the final image. This will DRAMATICALLY affect the runtime.
         int xResolution = 800;
         int yResolution = 600;
@@ -44,6 +45,9 @@ public class RaytracerDriver {
         // saveTestImage();
 
         System.out.println("Done");
+
+        Long end = System.currentTimeMillis();
+        System.out.println("Time elapsed: " + (end - time) + " milliseconds");
     }
 
     /**

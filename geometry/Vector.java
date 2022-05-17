@@ -1,4 +1,5 @@
 package geometry;
+
 public class Vector {
     private double dx, dy, dz;
 
@@ -42,6 +43,13 @@ public class Vector {
         double newDX = dx - v.getDX();
         double newDY = dy - v.getDY();
         double newDZ = dz - v.getDZ();
+        return new Vector(newDX, newDY, newDZ);
+    }
+
+    public Vector add(Vector v) {
+        double newDX = dx + v.getDX();
+        double newDY = dy + v.getDY();
+        double newDZ = dz + v.getDZ();
         return new Vector(newDX, newDY, newDZ);
     }
 

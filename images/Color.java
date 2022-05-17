@@ -28,4 +28,15 @@ public class Color {
         return (ir << 16) | (ig << 8) | (ib << 0);
     }
 
+    public Color shade(Color c) {
+        return new Color(r * c.getR(), g * c.getG(), b * c.getB());
+    }
+
+    public Color tint(Color c) {
+        double rtinted = r + (1 - r) * c.getR();
+        double gtinted = g + (1 - g) * c.getG();
+        double btinted = b + (1 - b) * c.getB();
+        return new Color(rtinted, gtinted, btinted);
+    }
+
 }
