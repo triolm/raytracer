@@ -1,11 +1,7 @@
 package shapes;
 
-import geometry.Intersection;
-import geometry.Point;
-import geometry.Ray;
-import geometry.Vector;
-import mesh.Material;
-import mesh.Surface;
+import geometry.*;
+import mesh.*;
 
 /**
  * Represents a tube (uncapped finite cylinder) in 3D space.

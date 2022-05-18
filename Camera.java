@@ -1,6 +1,4 @@
-import geometry.Point;
-import geometry.Ray;
-import geometry.Vector;
+import geometry.*;
 
 public class Camera {
     Point position;
@@ -33,7 +31,7 @@ public class Camera {
         return new Ray(position, rayVector);
     }
 
-    public Vector getForward(){
+    public Vector getForward() {
         return this.forward;
     }
 }

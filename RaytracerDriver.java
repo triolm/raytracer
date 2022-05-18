@@ -1,16 +1,8 @@
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-
 import images.ColorImage;
-
 import java.io.File;
 
-/**
- * Driver for the various stages of the image generation and saving process.
- * 
- * @author Ben Farrar
- * @version 2019.05.22
- */
 public class RaytracerDriver {
     public static void main(String[] args) {
         long time = System.currentTimeMillis();
@@ -30,7 +22,7 @@ public class RaytracerDriver {
 
         // Save the image out as a png
         System.out.println("Saving file...");
-        String filename = "_output/scene1.png";
+        String filename = "_output/scene2.png";
         saveImage(filename, image);
 
         /*

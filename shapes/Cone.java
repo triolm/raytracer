@@ -1,10 +1,7 @@
 package shapes;
-import geometry.Intersection;
-import geometry.Point;
-import geometry.Ray;
-import geometry.Vector;
-import mesh.Material;
-import mesh.Surface;
+
+import geometry.*;
+import mesh.*;
 
 /**
  * Represents a cone in 3D space. This shape is uncapped (you can cap with a

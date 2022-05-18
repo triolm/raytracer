@@ -24,7 +24,7 @@ public class Lambert extends Material {
         if (product < 0) {
             return new Color(0, 0, 0);
         }
-        Color dimmed = new Color(color.getR() * product, color.getG() * product, color.getB() * product);
+        Color dimmed = color.shade(new Color(product, product, product));
         dimmed = dimmed.shade(li.computeLightColor(i.getPosition()));
         return dimmed;
 

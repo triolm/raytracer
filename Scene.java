@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import geometry.Intersection;
-import geometry.Ray;
-import images.Color;
-import images.ColorImage;
-import mesh.Surface;
+import geometry.*;
+import images.*;
+import mesh.*;
 import lights.*;
 
 public class Scene {

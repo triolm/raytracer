@@ -1,4 +1,5 @@
 package lights;
+
 import images.Color;
 import geometry.Point;
 import geometry.Vector;
@@ -13,7 +14,7 @@ public class PointLight extends Light {
     }
 
     public Vector computeLightDirection(Point surfacePoint) {
-        return location.subtract(surfacePoint);
+        return location.subtract(surfacePoint).normalize();
     }
 
     public Color computeLightColor(Point surfacePoint) {
