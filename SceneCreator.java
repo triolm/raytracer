@@ -73,8 +73,8 @@ public class SceneCreator {
                                 xResolution / yResolution); // aspect ratio
                 Scene s = new Scene(cam);
 
-                s.addSurface(new Sphere(new Point(-6, 0, -20), .8, new Lambert(Colors.RED)));
-                s.addSurface(new Sphere(new Point(-4, 0, -20), .8, new Lambert(Colors.ORANGE)));
+                s.addSurface(new Sphere(new Point(-6, 0, -20), .8, new Phong(Colors.RED, Colors.GREY, 5)));
+                s.addSurface(new Sphere(new Point(-4, 0, -20), .8, new Lambert(Colors.RED)));
                 s.addSurface(new Sphere(new Point(-2, 0, -20), .8, new Lambert(Colors.YELLOW)));
                 s.addSurface(new Sphere(new Point(0, 0, -20), .8, new Lambert(Colors.GREEN)));
                 s.addSurface(new Sphere(new Point(2, 0, -20), .8, new Lambert(Colors.BLUE)));
@@ -97,7 +97,7 @@ public class SceneCreator {
                 s.addSurface(new Sphere(new Point(4, -2, -20), .8, new Lambert(Colors.DKPURPLE)));
                 s.addSurface(new Sphere(new Point(6, -2, -20), .8, new Lambert(Colors.DKGREY)));
 
-                PointLight lt = new PointLight(Colors.LTGREY, new Point(10, 10,
+                PointLight lt = new PointLight(Colors.LTGREY, new Point(10, 16,
                                 0));
                 s.addLight(lt);
                 PointLight lt2 = new PointLight(Colors.DKGREY, new Point(-10, 10,

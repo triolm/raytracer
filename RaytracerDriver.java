@@ -14,7 +14,7 @@ public class RaytracerDriver {
         // methods to select
         // which scene to render.
         System.out.println("Creating scene...");
-        Scene s = SceneCreator.scene2(xResolution, yResolution);
+        Scene s = SceneCreator.colorTest(xResolution, yResolution);
 
         // Render the scene into a ColorImage
         System.out.println("Rendering image...");
@@ -22,7 +22,7 @@ public class RaytracerDriver {
 
         // Save the image out as a png
         System.out.println("Saving file...");
-        String filename = "_output/scene2.png";
+        String filename = "_output/materials.png";
         saveImage(filename, image);
 
         /*

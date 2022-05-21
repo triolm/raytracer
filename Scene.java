@@ -40,25 +40,23 @@ public class Scene {
             return c;
         }
         for (Light i : lights) {
-            c = c.tint((smallest.getMaterial().computeLighting(smallest, r, i)));
+            if (!isShadowed(smallest.getPosition(), i)) {
+                c = c.tint((smallest.getMaterial().computeLighting(smallest, r, i)));
+            }
         }
         return c;
+    }
 
-        /**
-         * First, run through the list of surfaces looking for intersections using the
-         * intersect method. Some will be null, indicating there wasn't a collision,
-         * while some will return a valid intersection object. As you are iterating
-         * through the list, keep track of & store the closest intersection, which is
-         * the one with the smallest distance.
-         * Next, once you have made it all the way through the list, if there were no
-         * valid intersections, return the color black.
-         * Otherwise, we have now selected one intersection which is the closest to the
-         * ray's origin. Create a new color as black. For each light in the list of
-         * lights, calculate the intersection point's lighting using the computeLighting
-         * method we wrote in phase 4, and then tint your new black color by this
-         * amount, updating the color each time. When you have made it through the
-         * entire list of lights, return the new color as the final color for this ray.
-         */
+    public boolean isShadowed(Point p, Light li) {
+        Ray shadowRay = new Ray(p, li.computeLightDirection(p));
+        for (Surface i : surfaces) {
+            Intersection sect = i.intersect(shadowRay);
+            if (sect != null && sect.getDistance() < li.computeLightDistance(p)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public ColorImage render(int xRes, int yRes) {
