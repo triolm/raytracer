@@ -32,6 +32,14 @@ public class Color {
         return new Color(r * c.getR(), g * c.getG(), b * c.getB());
     }
 
+    public Color scale(double s) {
+        return new Color(r * s, g * s, b * s);
+    }
+
+    public Color add(Color c) {
+        return new Color(r + c.getR(), g + c.getG(), b + c.getB());
+    }
+
     public Color tint(Color c) {
         double rtinted = r + (1 - r) * c.getR();
         double gtinted = g + (1 - g) * c.getG();

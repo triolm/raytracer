@@ -54,7 +54,7 @@ public class SceneCreator {
                 s.addSurface(new Sphere(new Point(-0, -1, -19), 1, new Lambert(Colors.LTYELLOW)));
                 s.addSurface(new Cone(new Point(4, -2, -25), new Point(4, 0, -25), 1, new Lambert(Colors.LTGREEN)));
                 s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
-                                new Lambert(Colors.LTGREEN)));
+                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5)));
 
                 PointLight lt = new PointLight(Colors.WHITE, new Point(10, 10,
                                 0));
@@ -74,34 +74,33 @@ public class SceneCreator {
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Sphere(new Point(-6, 0, -20), .8, new Phong(Colors.RED, Colors.GREY, 5)));
-                s.addSurface(new Sphere(new Point(-4, 0, -20), .8, new Lambert(Colors.RED)));
+                s.addSurface(new Sphere(new Point(-4, 0, -20), .8, new Lambert(Colors.ORANGE)));
                 s.addSurface(new Sphere(new Point(-2, 0, -20), .8, new Lambert(Colors.YELLOW)));
-                s.addSurface(new Sphere(new Point(0, 0, -20), .8, new Lambert(Colors.GREEN)));
+                s.addSurface(new Sphere(new Point(0, 0, -20), .8, new Phong(Colors.GREEN, Colors.GREY, 5)));
                 s.addSurface(new Sphere(new Point(2, 0, -20), .8, new Lambert(Colors.BLUE)));
                 s.addSurface(new Sphere(new Point(4, 0, -20), .8, new Lambert(Colors.PURPLE)));
-                s.addSurface(new Sphere(new Point(6, 0, -20), .8, new Lambert(Colors.GREY)));
+                s.addSurface(new Sphere(new Point(6, 0, -20), .8, new Phong(Colors.GREY, Colors.GREY, 5)));
 
                 s.addSurface(new Sphere(new Point(-6, 2, -20), .8, new Lambert(Colors.LTRED)));
-                s.addSurface(new Sphere(new Point(-4, 2, -20), .8, new Lambert(Colors.LTORANGE)));
+                s.addSurface(new Sphere(new Point(-4, 2, -20), .8, new Phong(Colors.LTORANGE, Colors.GREY, 5)));
                 s.addSurface(new Sphere(new Point(-2, 2, -20), .8, new Lambert(Colors.LTYELLOW)));
                 s.addSurface(new Sphere(new Point(0, 2, -20), .8, new Lambert(Colors.LTGREEN)));
-                s.addSurface(new Sphere(new Point(2, 2, -20), .8, new Lambert(Colors.LTBLUE)));
+                s.addSurface(new Sphere(new Point(2, 2, -20), .8, new Phong(Colors.LTBLUE, Colors.GREY, 5)));
                 s.addSurface(new Sphere(new Point(4, 2, -20), .8, new Lambert(Colors.LTPURPLE)));
                 s.addSurface(new Sphere(new Point(6, 2, -20), .8, new Lambert(Colors.LTGREY)));
 
                 s.addSurface(new Sphere(new Point(-6, -2, -20), .8, new Lambert(Colors.DKRED)));
                 s.addSurface(new Sphere(new Point(-4, -2, -20), .8, new Lambert(Colors.DKORANGE)));
-                s.addSurface(new Sphere(new Point(-2, -2, -20), .8, new Lambert(Colors.DKYELLOW)));
+                s.addSurface(new Sphere(new Point(-2, -2, -20), .8, new Phong(Colors.DKYELLOW, Colors.DKGREY, 5)));
                 s.addSurface(new Sphere(new Point(0, -2, -20), .8, new Lambert(Colors.DKGREEN)));
                 s.addSurface(new Sphere(new Point(2, -2, -20), .8, new Lambert(Colors.DKBLUE)));
-                s.addSurface(new Sphere(new Point(4, -2, -20), .8, new Lambert(Colors.DKPURPLE)));
+                s.addSurface(new Sphere(new Point(4, -2, -20), .8, new Phong(Colors.DKPURPLE, Colors.DKGREY, 5)));
                 s.addSurface(new Sphere(new Point(6, -2, -20), .8, new Lambert(Colors.DKGREY)));
 
                 PointLight lt = new PointLight(Colors.LTGREY, new Point(10, 16,
                                 0));
                 s.addLight(lt);
-                PointLight lt2 = new PointLight(Colors.DKGREY, new Point(-10, 10,
-                                0));
+                PointLight lt2 = new PointLight(Colors.DKGREY, new Point(-10, 16, -1));
                 s.addLight(lt2);
                 return s;
         }

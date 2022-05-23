@@ -7,22 +7,22 @@ public class RaytracerDriver {
     public static void main(String[] args) {
         long time = System.currentTimeMillis();
         // Size of the final image. This will DRAMATICALLY affect the runtime.
-        int xResolution = 800;
-        int yResolution = 600;
+        int xResolution = 2000;
+        int yResolution = 1600;
 
         // Create the scene. You can change this when you make other scene creation
         // methods to select
         // which scene to render.
         System.out.println("Creating scene...");
-        Scene s = SceneCreator.colorTest(xResolution, yResolution);
+        Scene s = SceneCreator.scene2(xResolution, yResolution);
 
         // Render the scene into a ColorImage
         System.out.println("Rendering image...");
-        ColorImage image = s.render(xResolution, yResolution);
+        ColorImage image = s.render(xResolution, yResolution, 12);
 
         // Save the image out as a png
         System.out.println("Saving file...");
-        String filename = "_output/materials.png";
+        String filename = "_output/scene2v2.png";
         saveImage(filename, image);
 
         /*

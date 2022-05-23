@@ -27,7 +27,7 @@ public class Scene {
         surfaces.add(s);
     }
 
-    public Color computeVisibleColor(Ray r) {
+    public Color computeVisibleColor(Ray r, int bouncesLeft) {
         Intersection smallest = null;
         for (Surface i : surfaces) {
             Intersection sect = i.intersect(r);
@@ -44,7 +44,15 @@ public class Scene {
                 c = c.tint((smallest.getMaterial().computeLighting(smallest, r, i)));
             }
         }
-        return c;
+        if (bouncesLeft <= 0) {
+            return c;
+        }
+        Vector reflect = smallest.getNormal().scale((smallest.getNormal().dot(r.getDirection().scale(-1))) * 2)
+                .subtract(r.getDirection().scale(-1)).normalize();
+        Ray reflectRay = new Ray(smallest.getPosition(), reflect);
+        Color reflectColor = computeVisibleColor(reflectRay, bouncesLeft - 1);
+        double reflectivness = smallest.getMaterial().getReflectiveness();
+        return c.tint(reflectColor.shade(new Color(reflectivness, reflectivness, reflectivness)));
     }
 
     public boolean isShadowed(Point p, Light li) {
@@ -59,20 +67,34 @@ public class Scene {
 
     }
 
-    public ColorImage render(int xRes, int yRes) {
+    public ColorImage render(int xRes, int yRes, int numSamples) {
+        int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
             for (int y = 0; y < yRes; y++) {
-                double u = (x + 0.5) / xRes;
-                double v = (y + 0.5) / yRes;
+                Color c = new Color(0, 0, 0);
 
-                Ray ray = camera.generateRay(u, v);
-                for (Surface i : surfaces) {
-                    Intersection sect = i.intersect(ray);
-                    if (sect != null) {
-                        img.setColor(x, y, computeVisibleColor(ray));
+                for (int i = 0; i < aaRes; i++) {
+                    for (int j = 0; j < aaRes; j++) {
+
+                        double u = (x + (i + 0.5) / aaRes) / xRes;
+                        double v = (y + (i + 0.5) / aaRes) / yRes;
+
+                        Ray ray = camera.generateRay(u, v);
+                        Color sample = null;
+                        for (Surface s : surfaces) {
+                            Intersection sect = s.intersect(ray);
+                            if (sect != null) {
+                                sample = computeVisibleColor(ray, 3);
+                            }
+                        }
+                        if (sample != null) {
+                            c = c.add(sample);
+                        }
                     }
                 }
+                c = c.scale(1 / Math.pow(aaRes, 2));
+                img.setColor(x, y, c);
             }
         }
         return img;
