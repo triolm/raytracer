@@ -100,13 +100,3 @@ public class Scene {
         return img;
     }
 }
-/**
- * Use the camera to generate a ray passing through u,v.
- * For each surface in the surfaces list:
- * Find the intersection of the surface with the ray using the intersect method
- * If the intersection is not null, set the ColorImage at this column and row to
- * some new color, which should be different from your background (default)
- * color. (Maybe white for now?)
- * Finally, return the image you created.
- * 
- */

@@ -1,9 +1,6 @@
 package mesh;
 
 import images.Color;
-
-import java.io.Console;
-
 import geometry.*;
 import lights.*;
 

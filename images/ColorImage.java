@@ -1,4 +1,7 @@
 package images;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 public class ColorImage {
     private Color[][] grid;
@@ -26,5 +29,29 @@ public class ColorImage {
 
     public void setColor(int x, int y, Color c) {
         grid[x][y] = c;
+    }
+
+    public BufferedImage toBufferedImage(){
+        BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
+                bi.setRGB(x, getHeight() - 1 - y, getColor(x, y).toARGB());
+                // bi.setRGB(x,y,image.getColor(x,y).toARGB());
+            }
+        }
+        return bi;
+    }
+
+    public static void save(String filename, ColorImage image) {
+        try {
+
+            BufferedImage bi = image.toBufferedImage();
+            ImageIO.write(bi, "PNG", new File(filename));
+
+        } catch (Exception e) {
+            System.out.println("Problem saving image: " + filename);
+            System.out.println(e);
+            System.exit(1);
+        }
     }
 }

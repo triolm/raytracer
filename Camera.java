@@ -1,20 +1,18 @@
 import geometry.*;
 
 public class Camera {
-    Point position;
-    Vector forward;
-    Vector up;
-    Vector right;
-    double xFoV;
-    double yFoV;
-    double aspectRatio;
+    private Point position;
+    private Vector forward;
+    private Vector up;
+    private Vector right;
+    private double xFoV;
+    private double yFoV;
 
     public Camera(Point position, Vector forward, Vector up, double FOV, double aspectRatio) {
         this.position = position;
-        this.forward = forward;
+        this.forward = forward.normalize();
         this.up = up;
         right = forward.cross(up);
-        this.aspectRatio = aspectRatio;
         this.xFoV = Math.toRadians(FOV);
         yFoV = Math.atan(Math.tan(xFoV) / aspectRatio);
     }
@@ -34,4 +32,9 @@ public class Camera {
     public Vector getForward() {
         return this.forward;
     }
+
+    public Vector getRight() {
+        return this.right;
+    }
+
 }

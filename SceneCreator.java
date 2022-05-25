@@ -20,15 +20,15 @@ public class SceneCreator {
                 Surface s1 = new Sphere(new Point(4, 4, -30), 2, new Lambert(new Color(.4, .6, .8)));
                 s.addSurface(s1);
 
-                Surface s2 = new Sphere(new Point(-4, -4, -25), 2, new Lambert(new Color(.6,
-                                .6, .8)));
+                Surface s2 = new Sphere(new Point(-4, -4, -25), 2, new Phong(new Color(.6,
+                                .6, .8), Colors.LTGREY, 5));
                 s.addSurface(s2);
 
                 Surface s3 = new Tube(new Point(-6, 10, -40), new Point(0, -4, -50), 4,
-                                new Lambert(new Color(.4, .6, .8)));
+                                new MirrorPhong(new Color(.4, .6, .8), Colors.LTGREY, 5, .5));
                 s.addSurface(s3);
                 Surface s4 = new Cone(new Point(6, -10, -45), new Point(10, -4, -45), 4,
-                                new Lambert(new Color(.8, .6, .4)));
+                                new Phong(new Color(.8, .6, .4), Colors.LTGREY, 5));
                 s.addSurface(s4);
 
                 PointLight lt = new PointLight(new Color(.75, .75, .75), new Point(10, 10,
@@ -102,6 +102,29 @@ public class SceneCreator {
                 s.addLight(lt);
                 PointLight lt2 = new PointLight(Colors.DKGREY, new Point(-10, 16, -1));
                 s.addLight(lt2);
+                return s;
+        }
+
+        public static Scene UIScene(double xResolution, double yResolution, Camera cam) {
+                Scene s = new Scene(cam);
+
+                s.addSurface(new Sphere(new Point(0, 0, 0), 100, new Lambert(Colors.LTGREY)));
+
+                s.addSurface(new Sphere(new Point(4, 4, -30), 2, new Lambert(new Color(.4,
+                                .6, .8))));
+                s.addSurface(new Sphere(new Point(-4, -4, -25), 2, new Phong(new Color(.6,
+                                .6, .8), Colors.LTGREY, 5)));
+                s.addSurface(new Tube(new Point(-6, 10, -40), new Point(0, -4, -50), 4,
+                                new MirrorPhong(new Color(.4, .6, .8), Colors.LTGREY, 5, .5)));
+                s.addSurface(new Cone(new Point(6, -10, -45), new Point(10, -4, -45), 4,
+                                new Phong(new Color(.8, .6, .4), Colors.LTGREY, 5)));
+
+                PointLight lt = new PointLight(new Color(.75, .75, .75), new Point(10, 10,
+                                0));
+                s.addLight(lt);
+                // PointLight lt2 = new PointLight(new Color(1, .5, 1), new Point(-20, 20,
+                // 0));
+                // s.addLight(lt2);
                 return s;
         }
 
