@@ -14,10 +14,10 @@ public class RaytracerDriver {
         Scene s = SceneCreator.scene2(xResolution, yResolution);
 
         System.out.println("Rendering images...");
-        ColorImage image = s.render(xResolution, yResolution, 256);
+        ColorImage image = s.render(xResolution, yResolution, 16);
 
         System.out.println("Saving files...");
-        String filename = "_output/scene2bulb.png";
+        String filename = "_output/scene2isometric.png";
         ColorImage.save(filename, image);
 
         System.out.println("Done");

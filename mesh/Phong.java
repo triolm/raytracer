@@ -23,6 +23,7 @@ public class Phong extends Material {
         }
         Color dimmed = diffuse.shade(new Color(product, product, product));
         dimmed = dimmed.shade(li.computeLightColor(i.getPosition()));
+        
         Vector normal = i.getNormal();
         Vector l = li.computeLightDirection(i.getPosition());
         Vector reflect = normal.scale((normal.dot(l)) * 2).subtract(l).normalize();

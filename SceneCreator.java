@@ -1,3 +1,5 @@
+import cameras.*;
+import cameras.PerspectiveCamera;
 import geometry.*;
 import images.*;
 import lights.*;
@@ -7,7 +9,7 @@ import shapes.*;
 public class SceneCreator {
 
         public static Scene scene1(double xResolution, double yResolution) {
-                Camera cam = new Camera(new Point(0, 0, 0), // camera location
+                PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
@@ -41,11 +43,11 @@ public class SceneCreator {
         }
 
         public static Scene scene2(double xResolution, double yResolution) {
-                Camera cam = new Camera(new Point(0, 0, 0), // camera location
+                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
-                                18, // field of view
-                                xResolution / yResolution); // aspect ratio
+                                20, // field of view
+                                xResolution / yResolution, .1, 18); // aspect ratio
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Tube(new Point(-5, -1, -20), new Point(-3, -1, -25), 1,
@@ -66,7 +68,7 @@ public class SceneCreator {
         }
 
         public static Scene colorTest(double xResolution, double yResolution) {
-                Camera cam = new Camera(new Point(0, 0, 0), // camera location
+                PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
@@ -105,7 +107,7 @@ public class SceneCreator {
                 return s;
         }
 
-        public static Scene UIScene(double xResolution, double yResolution, Camera cam) {
+        public static Scene UIScene(double xResolution, double yResolution, PerspectiveCamera cam) {
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Sphere(new Point(0, 0, 0), 100, new Lambert(Colors.LTGREY)));

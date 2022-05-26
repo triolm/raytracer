@@ -1,6 +1,8 @@
+package cameras;
+
 import geometry.*;
 
-public class Camera {
+public class PerspectiveCamera extends Camera {
     private Point position;
     private Vector forward;
     private Vector up;
@@ -8,7 +10,8 @@ public class Camera {
     private double xFoV;
     private double yFoV;
 
-    public Camera(Point position, Vector forward, Vector up, double FOV, double aspectRatio) {
+    public PerspectiveCamera(Point position, Vector forward, Vector up, double FOV, double aspectRatio) {
+        super();
         this.position = position;
         this.forward = forward.normalize();
         this.up = up;
@@ -35,6 +38,18 @@ public class Camera {
 
     public Vector getRight() {
         return this.right;
+    }
+
+    public Point getPosition() {
+        return this.position;
+    }
+
+    public double getXFoV() {
+        return this.xFoV;
+    }
+
+    public double getYFoV() {
+        return this.yFoV;
     }
 
 }
