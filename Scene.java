@@ -47,7 +47,12 @@ public class Scene {
         if (bouncesLeft <= 0) {
             return c;
         }
-        Vector reflect = smallest.getNormal().scale((smallest.getNormal().dot(r.getDirection().scale(-1))) * 2)
+        double dev = smallest.getMaterial().getDeviance();
+        Vector ogDir = new Vector(smallest.getNormal().getDX() + Math.random() * dev * 2 - dev,
+                smallest.getNormal().getDY() + Math.random() * dev * 2 - dev,
+                smallest.getNormal().getDZ() + Math.random() * dev * 2 - dev);
+
+        Vector reflect = ogDir.scale((ogDir.dot(r.getDirection().scale(-1))) * 2)
                 .subtract(r.getDirection().scale(-1)).normalize();
         Ray reflectRay = new Ray(smallest.getPosition(), reflect);
         Color reflectColor = computeVisibleColor(reflectRay, bouncesLeft - 1);

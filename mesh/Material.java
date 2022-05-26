@@ -15,4 +15,8 @@ public abstract class Material {
     public double getReflectiveness() {
         return 0;
     }
+
+    public double getDeviance() {
+        return 0;
+    }
 }
