@@ -5,6 +5,8 @@ import images.*;
 import lights.*;
 import mesh.*;
 import shapes.*;
+import shapes.complex.Cylinder;
+import shapes.complex.Quadrilateral;
 
 public class SceneCreator {
 
@@ -47,23 +49,30 @@ public class SceneCreator {
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
-                                xResolution / yResolution, .1, 18); // aspect ratio
+                                xResolution / yResolution, 0, 19); // aspect ratio
                 Scene s = new Scene(cam);
 
-                s.addSurface(new Tube(new Point(-5, -1, -20), new Point(-3, -1, -25), 1,
+                s.addSurface(new Cylinder(new Point(-5, -1, -20), new Point(-3, -1, -27), 1,
                                 new Lambert(Colors.LTSKYBLUE)));
 
-                s.addSurface(new Sphere(new Point(-0, -1, -19), 1, new Lambert(Colors.LTYELLOW)));
+                s.addSurface(new Quadrilateral(new Point(0, -2, -31),
+                                new Point(0, 1, -31), new Point(4, 1, -29),
+                                new Point(4, -2, -29), new MirrorPhong(Colors.DKGREY, Colors.WHITE, 5, .8, .001)));
+
+                s.addSurface(new Sphere(new Point(-0, 2, -19), 1, new Lambert(Colors.LTYELLOW)));
+                s.addSurface(new Sphere(new Point(5, -1, -14), 1, new Lambert(Colors.LTPURPLE)));
                 s.addSurface(new Cone(new Point(4, -2, -25), new Point(4, 0, -25), 1, new Lambert(Colors.LTGREEN)));
+                s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0, -14), 1, new Lambert(Colors.LTRED)));
+
                 s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
                                 new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+                s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(Colors.LTBLUE)));
 
-                LightBulb lt = new LightBulb(Colors.WHITE, new Point(10, 10,
-                                0), 2);
+                Light lt = new DirectionalLight(Colors.WHITE, new Vector(0, 1,
+                                -.3), 10);
                 s.addLight(lt);
-                // PointLight lt2 = new PointLight(Colors.BLUE, new Point(-10, 10,
-                // -0));
-                // s.addLight(lt2);
+
+                s.addLight(new AmbientLight(Colors.DKGREY));
                 return s;
         }
 

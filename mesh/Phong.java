@@ -36,4 +36,8 @@ public class Phong extends Material {
                 coeff, coeff)).shade(specular);
         return dimmed.tint(hColor);
     }
+
+    public Color getColor(){
+        return diffuse;
+    }
 }

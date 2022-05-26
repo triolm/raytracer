@@ -42,7 +42,9 @@ public class Scene {
             return c;
         }
         for (Light i : lights) {
-            if (!isShadowed(smallest.getPosition(), i)) {
+            if (i instanceof AmbientLight) {
+                c = c.tint(smallest.getMaterial().getColor().shade(i.computeLightColor(smallest.getPosition())));
+            } else if (!isShadowed(smallest.getPosition(), i)) {
                 c = c.tint((smallest.getMaterial().computeLighting(smallest, r, i)));
             }
         }

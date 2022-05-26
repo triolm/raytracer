@@ -20,4 +20,5 @@ public class MirrorPhong extends Phong {
     public double getDeviance() {
         return this.maxDist;
     }
+
 }

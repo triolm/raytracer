@@ -19,4 +19,8 @@ public abstract class Material {
     public double getDeviance() {
         return 0;
     }
+
+    public Color getColor() {
+        return null;
+    }
 }
