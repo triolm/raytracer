@@ -104,4 +104,22 @@ public class ColorImage {
         }
         return newImage;
     }
+
+    public static ColorImage fromBufferedImage(BufferedImage img) {
+        ColorImage cImage = new ColorImage(img.getWidth(), img.getHeight());
+        for (int i = 0; i < img.getWidth(); i++) {
+            for (int j = 0; j < img.getHeight(); j++) {
+                cImage.setColor(i, j, Color.fromARGB(img.getRGB(i, j)));
+            }
+        }
+        return cImage;
+    }
+
+    public static ColorImage fromFile(String path) {
+        try {
+            return fromBufferedImage(ImageIO.read(new File(path)));
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

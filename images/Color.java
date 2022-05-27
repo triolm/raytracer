@@ -28,6 +28,13 @@ public class Color {
         return (ir << 16) | (ig << 8) | (ib << 0);
     }
 
+    public static Color fromARGB(int argb) {
+        double b = ((argb) & 0xFF) / 255.0;
+        double g = ((argb >> 8) & 0xFF) / 255.0;
+        double r = ((argb >> 16) & 0xFF) / 255.0;
+        return new Color(r, g, b);
+    }
+
     public Color shade(Color c) {
         return new Color(r * c.getR(), g * c.getG(), b * c.getB());
     }

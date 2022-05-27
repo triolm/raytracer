@@ -7,13 +7,13 @@ public class RaytracerDriver {
 
         long time = System.currentTimeMillis();
         // Image size
-        int xResolution = 800;
-        int yResolution = 600;
+        int xResolution = 1024;
+        int yResolution = 768;
         System.out.println("Creating scene...");
         Scene s = SceneCreator.MotionBlur(xResolution, yResolution);
 
         System.out.println("Rendering images...");
-        ColorImage image = s.render(xResolution, yResolution, 4);
+        ColorImage image = s.render(xResolution, yResolution, 8);
 
         System.out.println("Saving files...");
         String filename = "_output/blinn.png";

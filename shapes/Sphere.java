@@ -17,11 +17,24 @@ public class Sphere extends Surface {
     // Minimum distance for a valid collision. This prevents the sphere's rays from
     // colliding with itself.
     public static double EPSILON = 1e-6;
+    public Vector forward, up, right;
 
     public Sphere(Point position, double radius, Material m) {
         center = position;
         r = radius;
         mat = m;
+        this.forward = new Vector(0, 0, 1).normalize();
+        this.up = new Vector(0, 1, 0).normalize();
+        this.right = forward.cross(up).normalize();
+    }
+
+    public Sphere(Point position, double radius, Vector forward, Vector up, Material m) {
+        center = position;
+        r = radius;
+        mat = m;
+        this.forward = forward.normalize();
+        this.up = up.normalize();
+        this.right = forward.cross(up).normalize();
     }
 
     public Intersection intersect(Ray ray) {
@@ -46,7 +59,16 @@ public class Sphere extends Surface {
                 if (normal.dot(ray.getDirection()) > 0) {
                     normal = normal.scale(-1);
                 }
-                return new Intersection(collision, normal, distance, mat);
+
+                double Y = 1 - (Math.acos(normal.dot(up)) / Math.PI);
+                Vector E = normal.subtract(up.scale(normal.dot(up))).normalize();
+                double X;
+                if (E.dot(right) > 0) {
+                    X = 0.5 - (Math.acos(E.dot(forward)) / (Math.PI * 2));
+                } else {
+                    X = 0.5 + (Math.acos(E.dot(forward)) / (Math.PI * 2));
+                }
+                return new Intersection(collision, normal, distance, X, Y, mat);
             }
         }
         return null;

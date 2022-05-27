@@ -40,7 +40,7 @@ public class BlinnPhong extends Material {
         return dimmed.tint(hColor);
     }
 
-    public Color getColor() {
+    public Color getColor(Intersection i) {
         return diffuse;
     }
 }

@@ -1,27 +1,31 @@
 package mesh;
 
-import images.Color;
+import images.*;
 import geometry.*;
 import lights.*;
 
-public class Phong extends Material {
-    Color diffuse, specular;
+public class ImagePhong extends Material {
+    Color specular;
     double exp;
+    ColorImage texture;
 
-    public Phong(Color diff, Color spec, double exp) {
-        this.diffuse = diff;
+    public ImagePhong(String filename, Color spec, double exp) {
+        this.texture = ColorImage.fromFile(filename);
         this.specular = spec;
         this.exp = exp;
 
     }
 
     public Color computeLighting(Intersection i, Ray viewingRay, Light li) {
+        Color base = texture.getColor((int) (i.getImageX() * texture.getWidth()),
+                (int) (i.getImageY() * texture.getHeight()));
+
         Vector direction = li.computeLightDirection(i.getPosition());
         double product = i.getNormal().dot(direction);
         if (product < 0) {
             return new Color(0, 0, 0);
         }
-        Color dimmed = diffuse.shade(new Color(product, product, product));
+        Color dimmed = base.shade(new Color(product, product, product));
         dimmed = dimmed.shade(li.computeLightColor(i.getPosition()));
 
         Vector normal = i.getNormal();
@@ -38,6 +42,8 @@ public class Phong extends Material {
     }
 
     public Color getColor(Intersection i) {
-        return diffuse;
+        return texture.getColor((int) (i.getImageX() * texture.getWidth()),
+                (int) (i.getImageY() * texture.getHeight()));
+
     }
 }

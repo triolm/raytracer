@@ -20,7 +20,5 @@ public abstract class Material {
         return 0;
     }
 
-    public Color getColor() {
-        return null;
-    }
+    public abstract Color getColor(Intersection i);
 }

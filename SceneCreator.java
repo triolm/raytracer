@@ -137,8 +137,8 @@ public class SceneCreator {
                 s.addSurface(new Cylinder(new Point(3, -2, -33), new Point(3, 0, -33), 1,
                                 new Lambert(Colors.LTGREEN)));
 
-                s.addSurface(new Sphere(new Point(3, -1, -20), 1,
-                                new Phong(Colors.LTSKYBLUE, Colors.LTGREY, 5)));
+                s.addSurface(new Sphere(new Point(3, -1, -20), 1, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new ImagePhong("./textures/earth.jpg", Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
                                 new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
