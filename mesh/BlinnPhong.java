@@ -4,11 +4,11 @@ import images.Color;
 import geometry.*;
 import lights.*;
 
-public class Phong extends Material {
+public class BlinnPhong extends Material {
     Color diffuse, specular;
     double exp;
 
-    public Phong(Color diff, Color spec, double exp) {
+    public BlinnPhong(Color diff, Color spec, double exp) {
         this.diffuse = diff;
         this.specular = spec;
         this.exp = exp;
@@ -16,8 +16,8 @@ public class Phong extends Material {
     }
 
     public Color computeLighting(Intersection i, Ray viewingRay, Light li) {
-        Vector direction = li.computeLightDirection(i.getPosition());
-        double product = i.getNormal().dot(direction);
+        Vector L = li.computeLightDirection(i.getPosition());
+        double product = i.getNormal().dot(L);
         if (product < 0) {
             return new Color(0, 0, 0);
         }
@@ -25,9 +25,12 @@ public class Phong extends Material {
         dimmed = dimmed.shade(li.computeLightColor(i.getPosition()));
 
         Vector normal = i.getNormal();
-        Vector l = li.computeLightDirection(i.getPosition());
-        Vector reflect = normal.scale((normal.dot(l)) * 2).subtract(l).normalize();
-        double cosine = viewingRay.getDirection().scale(-1).dot(reflect);
+
+        Vector sum = L.add(viewingRay.getDirection().scale(-1));
+        Vector H = sum.scale(1 / sum.length());
+
+        double cosine = normal.dot(H);
+
         if (cosine < 0) {
             return dimmed;
         }

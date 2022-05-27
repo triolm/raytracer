@@ -119,29 +119,39 @@ public class SceneCreator {
 
         public static Scene MotionBlur(double xResolution, double yResolution) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
-                                new Vector(0, 0, -1), // forward vector/view direction
+                                new Vector(0, -.05, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
-                                xResolution / yResolution, .3, 21); // aspect ratio
+                                xResolution / yResolution, 0, 21); // aspect ratio
                 Scene s = new Scene(cam);
 
+                s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0.5, -14), 1,
+                                new Lambert(Colors.LTRED)));
+
                 s.addSurface(new Cylinder(new Point(-5, -1, -20), new Point(-3, -1, -27), 1,
-                                new Lambert(Colors.LTSKYBLUE)));
+                                new Lambert(new Color(1, .75, .5))));
 
-                s.addSurface(new MovingSphere(new Point(-0, -1, -19), 1, new Vector(0, 1, 0),
-                                new Lambert(Colors.LTYELLOW)));
+                s.addSurface(new Sphere(new Point(-0, -1, -19), 1,
+                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 10)));
 
-                s.addSurface(new Sphere(new Point(4, -1, -13), 1, new Phong(Colors.LTPURPLE, Colors.LTGREY, 5)));
-                s.addSurface(new Cone(new Point(3, -2, -20), new Point(3, 0, -20), 1,
-                                new Phong(Colors.LTGREEN, Colors.LTGREY, 5)));
-                s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0, -14), 1, new Lambert(Colors.LTRED)));
+                s.addSurface(new Cylinder(new Point(3, -2, -33), new Point(3, 0, -33), 1,
+                                new Lambert(Colors.LTGREEN)));
+
+                s.addSurface(new Sphere(new Point(3, -1, -20), 1,
+                                new Phong(Colors.LTSKYBLUE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
+                                new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Cone(new Point(4, -2, -13), new Point(4, -.5, -13), .75,
+                                new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
 
                 s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
                                 new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
                 s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(new Color(.8, .8, 1))));
 
-                s.addLight(new LightBulb(new Color(.55, .5, .55), new Point(10, 10, 0), 3));
-                // s.addLight(new AmbientLight(new Color(.05, .05, .05)));
+                s.addLight(new LightBulb(new Color(.88, .8, .88), new Point(10, 10, 0), 2));
+                s.addLight(new AmbientLight(new Color(.15, .15, .15)));
                 return s;
 
         }
