@@ -58,14 +58,14 @@ public class Scene {
 
         Vector reflect = ogDir.scale((ogDir.dot(r.getDirection().scale(-1))) * 2)
                 .subtract(r.getDirection().scale(-1)).normalize();
-        Ray reflectRay = new Ray(smallest.getPosition(), reflect);
+        Ray reflectRay = new Ray(smallest.getPosition(), reflect, Math.random());
         Color reflectColor = computeVisibleColor(reflectRay, bouncesLeft - 1);
         double reflectivness = smallest.getMaterial().getReflectiveness();
         return c.tint(reflectColor.shade(new Color(reflectivness, reflectivness, reflectivness)));
     }
 
     public boolean isShadowed(Point p, Light li) {
-        Ray shadowRay = new Ray(p, li.computeLightDirection(p));
+        Ray shadowRay = new Ray(p, li.computeLightDirection(p), Math.random());
         for (Surface i : surfaces) {
             Intersection sect = i.intersect(shadowRay);
             if (sect != null && sect.getDistance() < li.computeLightDistance(p)) {
@@ -80,6 +80,9 @@ public class Scene {
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
+            if (x % ((int) xRes / 10) == 0) {
+                System.out.println("checkpoint");
+            }
             for (int y = 0; y < yRes; y++) {
                 Color c = new Color(0, 0, 0);
 

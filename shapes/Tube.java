@@ -64,7 +64,7 @@ public class Tube extends Surface {
         Vector rayMoveInFrame = new Vector(
                 0, rayDir.dot(frameY), rayDir.dot(frameZ)).normalize();
 
-        Ray rayInFrame = new Ray(rayStartInFrame, rayMoveInFrame);
+        Ray rayInFrame = new Ray(rayStartInFrame, rayMoveInFrame,0);
 
         // apply quadratic formula (for intersection of a ray with a circle) to the ray
         // we don't care about dz yet because the cylinder is infinite for our purposes

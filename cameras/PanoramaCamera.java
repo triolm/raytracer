@@ -32,7 +32,7 @@ public class PanoramaCamera extends Camera {
     public Ray generateRay(double u, double v) {
         Point ipp = imagePlanePoint(u, v);
         Vector rayVector = ipp.subtract(position);
-        return new Ray(position, rayVector);
+        return new Ray(position, rayVector, Math.random());
     }
 
     public Vector getForward() {

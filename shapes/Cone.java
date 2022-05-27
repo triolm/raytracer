@@ -77,7 +77,7 @@ public class Cone extends Surface {
         Vector rayMoveInFrame = new Vector(
                 0, rayDir.dot(frameY), rayDir.dot(frameZ)).normalize();
 
-        Ray rayInFrame = new Ray(rayStartInFrame, rayMoveInFrame);
+        Ray rayInFrame = new Ray(rayStartInFrame, rayMoveInFrame,0);
 
         // apply quadratic formula (for intersection of a ray with a circle) to the ray
         // I lifted these straight from the source above, but ultimately it's because

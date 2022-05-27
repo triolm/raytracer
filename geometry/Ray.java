@@ -3,10 +3,12 @@ package geometry;
 public class Ray {
     private Point point;
     private Vector vector;
+    private double time;
 
-    public Ray(Point p, Vector v) {
+    public Ray(Point p, Vector v, double time) {
         point = p;
         vector = v.normalize();
+        this.time = time;
     }
 
     public Point getPosition() {
@@ -19,5 +21,9 @@ public class Ray {
 
     public Point evaluate(double distance) {
         return point.add(vector.scale(distance));
+    }
+
+    public double gettime(){
+        return time;
     }
 }

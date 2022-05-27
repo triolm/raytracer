@@ -36,7 +36,7 @@ public class DOFCamera extends Camera {
         Point randPos = position.add(right.scale(Math.random() * size))
                 .add(up.scale(Math.random() * size));
         Vector rayVector = ipp.subtract(randPos);
-        return new Ray(randPos, rayVector);
+        return new Ray(randPos, rayVector, Math.random());
     }
 
     public Vector getForward() {

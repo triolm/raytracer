@@ -1,12 +1,10 @@
 import cameras.*;
-import cameras.PerspectiveCamera;
 import geometry.*;
 import images.*;
 import lights.*;
 import mesh.*;
 import shapes.*;
-import shapes.complex.Cylinder;
-import shapes.complex.Quadrilateral;
+import shapes.complex.*;
 
 public class SceneCreator {
 
@@ -44,7 +42,7 @@ public class SceneCreator {
                 return s;
         }
 
-        public static Scene scene2(double xResolution, double yResolution) {
+        public static Scene scene2(double xResolution, double yResolution, int time) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
@@ -64,15 +62,18 @@ public class SceneCreator {
                 s.addSurface(new Cone(new Point(4, -2, -25), new Point(4, 0, -25), 1, new Lambert(Colors.LTGREEN)));
                 s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0, -14), 1, new Lambert(Colors.LTRED)));
 
-                s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
-                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+                // s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new
+                // Point(200, -2, -200),
+                // new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
                 s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(Colors.LTBLUE)));
 
-                Light lt = new DirectionalLight(Colors.WHITE, new Vector(0, 1,
-                                -.3), 10);
-                s.addLight(lt);
+                // Light lt = new DirectionalLight(Colors.WHITE, new Vector(0, 1,
+                // -.3), 10);
+                // s.addLight(lt);
 
-                s.addLight(new AmbientLight(Colors.DKGREY));
+                s.addLight(new Sunlight(time));
+
+                s.addLight(new AmbientLight(new Color(.01, .01, .01)));
                 return s;
         }
 
@@ -114,6 +115,35 @@ public class SceneCreator {
                 PointLight lt2 = new PointLight(Colors.DKGREY, new Point(-10, 16, -1));
                 s.addLight(lt2);
                 return s;
+        }
+
+        public static Scene MotionBlur(double xResolution, double yResolution) {
+                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
+                                new Vector(0, 0, -1), // forward vector/view direction
+                                new Vector(0, 1, 0), // up vector
+                                20, // field of view
+                                xResolution / yResolution, .3, 21); // aspect ratio
+                Scene s = new Scene(cam);
+
+                s.addSurface(new Cylinder(new Point(-5, -1, -20), new Point(-3, -1, -27), 1,
+                                new Lambert(Colors.LTSKYBLUE)));
+
+                s.addSurface(new MovingSphere(new Point(-0, -1, -19), 1, new Vector(0, 1, 0),
+                                new Lambert(Colors.LTYELLOW)));
+
+                s.addSurface(new Sphere(new Point(4, -1, -13), 1, new Phong(Colors.LTPURPLE, Colors.LTGREY, 5)));
+                s.addSurface(new Cone(new Point(3, -2, -20), new Point(3, 0, -20), 1,
+                                new Phong(Colors.LTGREEN, Colors.LTGREY, 5)));
+                s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0, -14), 1, new Lambert(Colors.LTRED)));
+
+                s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
+                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+                s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(new Color(.8, .8, 1))));
+
+                s.addLight(new LightBulb(new Color(.55, .5, .55), new Point(10, 10, 0), 3));
+                // s.addLight(new AmbientLight(new Color(.05, .05, .05)));
+                return s;
+
         }
 
         public static Scene UIScene(double xResolution, double yResolution, PerspectiveCamera cam) {
