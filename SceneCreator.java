@@ -138,7 +138,7 @@ public class SceneCreator {
                                 new Lambert(Colors.LTGREEN)));
 
                 s.addSurface(new Sphere(new Point(3, -1, -20), 1, new Vector(0, 0, 1), new Vector(0, -1, 0),
-                                new ImagePhong("./textures/earth.jpg", Colors.LTGREY, 5)));
+                                new ImageBlinn("./textures/earth.jpg", Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
                                 new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
@@ -177,6 +177,50 @@ public class SceneCreator {
                 // 0));
                 // s.addLight(lt2);
                 return s;
+        }
+
+        public static Scene Movie(double xResolution, double yResolution, int frame) {
+                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
+                                new Vector(0, -.05, -1), // forward vector/view direction
+                                new Vector(0, 1, 0), // up vector
+                                20, // field of view
+                                xResolution / yResolution, 0, 21); // aspect ratio
+                Scene s = new Scene(cam);
+
+                s.addSurface(new Sphere(new Point(-0, -1, -19), 1,
+                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 10)));
+
+                double dx = 0;
+                double dz = 0;
+                frame = frame % 20;
+                if (frame < 5) {
+                        dx = 0.2 * frame;
+                        dz = 1 - 0.2 * frame;
+                } else if (frame < 10) {
+                        frame = frame - 5;
+                        dx = 1 - 0.2 * frame;
+                        dz = -0.2 * frame;
+                } else if (frame < 15) {
+                        frame = frame - 10;
+                        dx = -0.2 * frame;
+                        dz = -1 + 0.2 * frame;
+                } else {
+                        frame = frame - 15;
+                        dx = -1 + 0.2 * frame;
+                        dz = 0.2 * frame;
+                }
+
+                s.addSurface(new Sphere(new Point(3, -1, -20), 1, new Vector(dx, 0, dz),
+                                new Vector(0, -1, 0),
+                                new ImageLambert("./textures/earth.jpg")));
+
+                s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
+                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+
+                s.addLight(new LightBulb(new Color(.88, .8, .88), new Point(10, 10, 0), 2));
+                s.addLight(new AmbientLight(new Color(.15, .15, .15)));
+                return s;
+
         }
 
 }

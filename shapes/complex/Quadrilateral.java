@@ -2,6 +2,7 @@ package shapes.complex;
 
 import geometry.*;
 import mesh.*;
+import shapes.Surface;
 import shapes.Triangle;
 
 public class Quadrilateral extends Surface {

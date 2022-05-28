@@ -1,4 +1,4 @@
-package mesh;
+package shapes;
 import geometry.Intersection;
 import geometry.Ray;
 

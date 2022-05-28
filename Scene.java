@@ -4,6 +4,7 @@ import cameras.Camera;
 import geometry.*;
 import images.*;
 import mesh.*;
+import shapes.Surface;
 import lights.*;
 
 public class Scene {
@@ -81,8 +82,9 @@ public class Scene {
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
-            if (x % ((int) xRes / 10) == 0) {
-                System.out.println("checkpoint");
+            if (x % ((int) xRes / 20) == 0) {
+                System.out.print("\b".repeat(20) + "█".repeat((int) x * 20 / xRes + 1)
+                        + "░".repeat((int) 20 - (x * 20 / xRes + 1)));
             }
             for (int y = 0; y < yRes; y++) {
                 Color c = new Color(0, 0, 0);
@@ -110,6 +112,7 @@ public class Scene {
                 img.setColor(x, y, c);
             }
         }
+        System.out.println();
         return img;
     }
 }

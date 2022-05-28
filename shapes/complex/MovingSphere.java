@@ -2,6 +2,7 @@ package shapes.complex;
 
 import geometry.*;
 import mesh.*;
+import shapes.Surface;
 
 /**
  * Represents a sphere in 3D space.

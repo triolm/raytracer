@@ -47,7 +47,9 @@ public class ColorImage {
         try {
 
             BufferedImage bi = image.toBufferedImage();
-            ImageIO.write(bi, "PNG", new File(filename));
+            File f = new File(filename);
+            f.mkdirs();
+            ImageIO.write(bi, "PNG", f);
 
         } catch (Exception e) {
             System.out.println("Problem saving image: " + filename);
