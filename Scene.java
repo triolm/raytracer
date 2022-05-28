@@ -79,12 +79,18 @@ public class Scene {
     }
 
     public ColorImage render(int xRes, int yRes, int numSamples) {
+        return render(xRes, yRes, numSamples, false);
+    }
+
+    public ColorImage render(int xRes, int yRes, int numSamples, boolean showProgress) {
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
-            if (x % ((int) xRes / 20) == 0) {
-                System.out.print("\b".repeat(20) + "█".repeat((int) x * 20 / xRes + 1)
-                        + "░".repeat((int) 20 - (x * 20 / xRes + 1)));
+            if (showProgress) {
+                if (x % ((int) xRes / 20) == 0) {
+                    System.out.print("\b".repeat(20) + "█".repeat((int) x * 20 / xRes + 1)
+                            + "░".repeat((int) 20 - (x * 20 / xRes + 1)));
+                }
             }
             for (int y = 0; y < yRes; y++) {
                 Color c = new Color(0, 0, 0);
@@ -112,7 +118,9 @@ public class Scene {
                 img.setColor(x, y, c);
             }
         }
-        System.out.println();
+        if (showProgress) {
+            System.out.println();
+        }
         return img;
     }
 }

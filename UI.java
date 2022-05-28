@@ -9,10 +9,12 @@ import java.awt.Image;
 public class UI {
     static Point camPos;
     static Vector camForward;
+    static PerspectiveCamera cam;
+    final static double angle = 0.04908738521;
 
     public static void launch() throws Exception {
         camPos = new Point(0, 0, 0);
-        camForward = new Vector(0, 0, -1);
+        camForward = new Vector(.01, 0, -1);
         int xRes = 128;
         int yRes = 128;
         int scale = 4;
@@ -26,7 +28,7 @@ public class UI {
         imageHolder.add(imageLabel);
         f.add(imageHolder);
 
-        PerspectiveCamera cam = new PerspectiveCamera(camPos, camForward, new Vector(0, 1, 0), 20, 1);
+        cam = new PerspectiveCamera(camPos, camForward, new Vector(0, 1, 0), 20, 1);
 
         Scene s = SceneCreator.UIScene(xRes, yRes, cam);
         ColorImage image = s.render(xRes, yRes, 1);
@@ -42,10 +44,10 @@ public class UI {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyCode());
+                // System.out.println(e.getKeyCode());
                 switch (e.getKeyCode()) {
                     case 68:
-                        camPos = camPos.add(cam.getRight().normalize().scale(+.5));
+                        camPos = camPos.add(cam.getRight().normalize().scale(.5));
                         break;
                     case 65:
                         camPos = camPos.add(cam.getRight().normalize().scale(-.5));
@@ -56,27 +58,25 @@ public class UI {
                     case 83:
                         camPos = camPos.add(cam.getForward().scale(-.5));
                         break;
-                    // case 81:
-                    // double a = .2;
-                    // camForward = new Vector(
-                    // Math.cos(a * camForward.getDX()) - Math.sin(a * camForward.getDY()),
-                    // Math.sin(a * camForward.getDX()) + Math.cos(a * camForward.getDY()),
-                    // camForward.getDZ());
-                    // break;
-                    // case 69:
-                    // double a2 = -.2;
-                    // camForward = new Vector(camForward.getDX() * Math.cos(a2) -
-                    // camForward.getDY() * Math.sin(
-                    // a2), camForward.getDX() * Math.sin(a2) + camForward.getDY()
-                    // * Math.cos(a2),
-                    // camForward.getDZ());
-                    // System.out.println(camForward.getDX());
-                    // break;
+                    case 81:
+                        camForward = new Vector(
+                                camForward.getDX() * Math.cos(-angle) - camForward.getDZ() * Math.sin(-angle),
+                                camForward.getDY(),
+                                camForward.getDX() * Math.sin(-angle) + camForward.getDZ() * Math.cos(-angle))
+                                .normalize();
+                        break;
+                    case 69:
+                        camForward = new Vector(
+                                camForward.getDX() * Math.cos(angle) - camForward.getDZ() * Math.sin(angle),
+                                camForward.getDY(),
+                                camForward.getDX() * Math.sin(angle) + camForward.getDZ() * Math.cos(angle))
+                                .normalize();
+                        break;
                     default:
                         return;
                 }
 
-                PerspectiveCamera cam = new PerspectiveCamera(camPos, camForward, new Vector(0, 1, 0), 20, 1);
+                cam = new PerspectiveCamera(camPos, camForward, new Vector(0, 1, 0), 20, 1);
 
                 Scene s = SceneCreator.UIScene(xRes, yRes, cam);
                 ColorImage image = s.render(xRes, yRes, 1);
