@@ -25,6 +25,10 @@ public class Colors {
     public static final Color DKSKYBLUE = new Color(0, .15, .3);
     public static final Color LTSKYBLUE = new Color(.5, .75, 1);
 
+    public static final Color LTBLURPLE = new Color(.75, .25, 1);
+    public static final Color BLURPLE = new Color(.5, 0, 1);
+    public static final Color DKBLURPLE = new Color(.25, 0, .75);
+
     public static final Color PURPLE = new Color(1, 0, 1);
     public static final Color DKPURPLE = new Color(.3, 0, .3);
     public static final Color LTPURPLE = new Color(1, .5, 1);

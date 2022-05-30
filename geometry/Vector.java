@@ -61,4 +61,11 @@ public class Vector {
         return this.scale(1 / this.length());
     }
 
+    // https://matthew-brett.github.io/teaching/rotation_2d.html
+
+    public Vector rotateY(double angle) {
+        return new Vector(dx * Math.cos(angle) - dz * Math.sin(angle), dy, dx * Math.sin(angle) + dz * Math.cos(angle))
+                .normalize();
+    }
+
 }

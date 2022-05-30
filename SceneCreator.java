@@ -166,16 +166,37 @@ public class SceneCreator {
                 s.addSurface(new Sphere(new Point(-4, -4, -25), 2, new Phong(new Color(.6,
                                 .6, .8), Colors.LTGREY, 5)));
                 s.addSurface(new Tube(new Point(-6, 10, -40), new Point(0, -4, -50), 4,
-                                new MirrorPhong(new Color(.4, .6, .8), Colors.LTGREY, 5, .5, 0)));
+                                new Phong(new Color(.4, .6, .8), Colors.LTGREY, 5)));
                 s.addSurface(new Cone(new Point(6, -10, -45), new Point(10, -4, -45), 4,
                                 new Phong(new Color(.8, .6, .4), Colors.LTGREY, 5)));
 
-                PointLight lt = new PointLight(new Color(.75, .75, .75), new Point(10, 10,
+                PointLight lt = new PointLight(new Color(.85, .75, .85), new Point(10, 10,
                                 0));
                 s.addLight(lt);
-                // PointLight lt2 = new PointLight(new Color(1, .5, 1), new Point(-20, 20,
-                // 0));
-                // s.addLight(lt2);
+                return s;
+        }
+
+        public static Scene UIScene2(double xResolution, double yResolution, PerspectiveCamera cam) {
+                Scene s = new Scene(cam);
+
+                s.addSurface(new Sphere(new Point(0, 0, 0), 100,
+                                new BlinnPhong(Colors.LTGREY, Colors.WHITE, .5)));
+
+                s.addSurface(new Sphere(new Point(0, 0, 20), 2, new Lambert(Colors.LTRED)));
+                s.addSurface(new Sphere(new Point(14.14, 0, 14.14), 2, new Lambert(Colors.LTORANGE)));
+
+                s.addSurface(new Sphere(new Point(20, 0, 0), 2, new Lambert(Colors.LTYELLOW)));
+                s.addSurface(new Sphere(new Point(14.14, 0, -14.14), 2, new Lambert(Colors.LTGREEN)));
+
+                s.addSurface(new Sphere(new Point(0, 0, -20), 2, new Lambert(Colors.LTSKYBLUE)));
+                s.addSurface(new Sphere(new Point(-14.14, 0, -14.14), 2, new Lambert(Colors.BLUE)));
+
+                s.addSurface(new Sphere(new Point(-20, 0, 0), 2, new Lambert(Colors.LTBLURPLE)));
+                s.addSurface(new Sphere(new Point(-14.14, 0, 14.14), 2, new Lambert(Colors.LTPURPLE)));
+
+                PointLight lt = new PointLight(new Color(.8, .8, .8), new Point(10, 10,
+                                0));
+                s.addLight(lt);
                 return s;
         }
 

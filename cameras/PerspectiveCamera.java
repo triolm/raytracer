@@ -36,6 +36,10 @@ public class PerspectiveCamera extends Camera {
         return this.forward;
     }
 
+    public Vector getUp() {
+        return this.up;
+    }
+
     public Vector getRight() {
         return this.right;
     }
