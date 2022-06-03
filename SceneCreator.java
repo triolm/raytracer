@@ -10,9 +10,9 @@ public class SceneCreator {
 
         public static Scene scene1(double xResolution, double yResolution) {
                 PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
-                                new Vector(0, 0, -1), // forward vector/view direction
+                                new Vector(0, .01, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
-                                20, // field of view
+                                19, // field of view
                                 xResolution / yResolution); // aspect ratio
                 Scene s = new Scene(cam);
 
@@ -33,16 +33,16 @@ public class SceneCreator {
                                 new Phong(new Color(.8, .6, .4), Colors.LTGREY, 5));
                 s.addSurface(s4);
 
-                PointLight lt = new PointLight(new Color(.75, .75, .75), new Point(10, 10,
-                                0));
+                Light lt = new LightBulb(new Color(.75, .75, .75), new Point(10, 10,
+                                0), .1);
                 s.addLight(lt);
-                PointLight lt2 = new PointLight(new Color(1, .5, 1), new Point(-20, 20,
+                Light lt2 = new PointLight(new Color(1, .5, 1), new Point(-20, 20,
                                 0));
                 s.addLight(lt2);
                 return s;
         }
 
-        public static Scene scene2(double xResolution, double yResolution, int time) {
+        public static Scene scene2(double xResolution, double yResolution) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
@@ -62,16 +62,13 @@ public class SceneCreator {
                 s.addSurface(new Cone(new Point(4, -2, -25), new Point(4, 0, -25), 1, new Lambert(Colors.LTGREEN)));
                 s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0, -14), 1, new Lambert(Colors.LTRED)));
 
-                // s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new
-                // Point(200, -2, -200),
-                // new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+                s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
+                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
                 s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(Colors.LTBLUE)));
 
-                // Light lt = new DirectionalLight(Colors.WHITE, new Vector(0, 1,
-                // -.3), 10);
-                // s.addLight(lt);
-
-                s.addLight(new Sunlight(time));
+                Light lt = new DirectionalLight(Colors.WHITE, new Vector(0, 1,
+                                -.3), 10);
+                s.addLight(lt);
 
                 s.addLight(new AmbientLight(new Color(.01, .01, .01)));
                 return s;
@@ -117,12 +114,12 @@ public class SceneCreator {
                 return s;
         }
 
-        public static Scene MotionBlur(double xResolution, double yResolution) {
+        public static Scene scene3(double xResolution, double yResolution) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
-                                new Vector(0, -.05, -1), // forward vector/view direction
+                                new Vector(0, -.02, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
-                                xResolution / yResolution, 0, 21); // aspect ratio
+                                xResolution / yResolution, .25, 19); // aspect ratio
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0.5, -14), 1,
@@ -137,8 +134,8 @@ public class SceneCreator {
                 s.addSurface(new Cylinder(new Point(3, -2, -33), new Point(3, 0, -33), 1,
                                 new Lambert(Colors.LTGREEN)));
 
-                s.addSurface(new Sphere(new Point(3, -1, -20), 1, new Vector(0, 0, 1), new Vector(0, -1, 0),
-                                new ImageBlinn("./textures/earth.jpg", Colors.LTGREY, 5)));
+                s.addSurface(new Sphere(new Point(3, -1.25, -20), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new ImageBlinn("./textures/soccer.png", Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
                                 new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
@@ -244,4 +241,25 @@ public class SceneCreator {
 
         }
 
+        public static Scene cubeTest(double xResolution, double yResolution/* , PerspectiveCamera cam */) {
+                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
+                                new Vector(0, .1, -1), // forward vector/view direction
+                                new Vector(0, 1, 0), // up vector
+                                20, // field of view
+                                xResolution / yResolution, 0, 19); // aspect ratio
+                Scene s = new Scene(cam);
+
+                s.addSurface(new MinecraftTree(new Point(2, -1, -7), 1));
+                s.addSurface(new MinecraftTree(new Point(-2, -1, -9), 1.5));
+                s.addSurface(new Triangle(new Point(-40, -1, 40),
+                                new Point(40, -1, 40), new Point(0, -1, -40),
+                                new Lambert(new Color(130 / 255.0, 300 / 255.0, 90 / 255.0))));
+
+                s.addSurface(new Sphere(new Point(0, 0, 0), 20, new Lambert(Colors.LTSKYBLUE)));
+
+                s.addLight(new PointLight(Colors.WHITE, new Point(-10, 5, 0)));
+                s.addLight(new AmbientLight(Colors.DKGREY));
+
+                return s;
+        }
 }

@@ -5,6 +5,7 @@ import images.ColorImage;
 import geometry.*;
 import java.awt.event.*;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.FlowLayout;
 
 public class UI {
@@ -162,6 +163,9 @@ public class UI {
             case "1":
                 s = SceneCreator.UIScene2(xRes, yRes, cam);
                 break;
+            // case "2":
+            // s = SceneCreator.cubeTest(xRes, yRes, cam);
+            // break;
             default:
             case "0":
                 s = SceneCreator.UIScene(xRes, yRes, cam);
@@ -170,6 +174,7 @@ public class UI {
         }
         ColorImage image = s.render(xRes, yRes, 1);
         imageLabel.setIcon(
-                new ImageIcon(image.toBufferedImage()));
+                new ImageIcon(
+                        image.toBufferedImage().getScaledInstance(xRes * scale, yRes * scale, Image.SCALE_DEFAULT)));
     }
 }
