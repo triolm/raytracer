@@ -10,7 +10,8 @@ public class PerspectiveCamera extends Camera {
     private double xFoV;
     private double yFoV;
 
-    public PerspectiveCamera(Point position, Vector forward, Vector up, double FOV, double aspectRatio) {
+    public PerspectiveCamera(Point position, Vector forward, 
+    Vector up, double FOV, double aspectRatio) {
         super();
         this.position = position;
         this.forward = forward.normalize();

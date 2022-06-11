@@ -3,6 +3,7 @@ package images;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.util.List;
 
 public class ColorImage {
     private Color[][] grid;
@@ -68,7 +69,7 @@ public class ColorImage {
                 avg += getColor(i, ii).getG();
                 avg += getColor(i, ii).getB();
                 avg /= 3;
-                newImage.setColor(i, ii, new Color(avg, avg, avg));
+                newImage.setColor(i, this.getHeight() - ii - 1, new Color(avg, avg, avg));
             }
         }
         return newImage;
@@ -81,7 +82,7 @@ public class ColorImage {
                 double red = ((getColor(i, ii).getR() - .5) * f + .5);
                 double green = ((getColor(i, ii).getG() - .5) * f + .5);
                 double blue = ((getColor(i, ii).getB() - .5) * f + .5);
-                newImage.setColor(i, ii, new Color(red, green, blue));
+                newImage.setColor(i, this.getHeight() - ii - 1, new Color(red, green, blue));
             }
         }
         return newImage;
@@ -101,7 +102,7 @@ public class ColorImage {
                 double outputGreen = ((red * .349) + (green * .686) + (blue * .168));
                 double outputBlue = ((red * .272) + (green * .534) + (blue * .131));
 
-                newImage.setColor(i, ii, new Color(outputRed, outputGreen, outputBlue));
+                newImage.setColor(i, this.getHeight() - ii - 1, new Color(outputRed, outputGreen, outputBlue));
             }
         }
         return newImage;
@@ -123,5 +124,23 @@ public class ColorImage {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static ColorImage merge(List<ColorImage> imgs) {
+        int width = 0;
+        for (ColorImage i : imgs) {
+            width += i.getWidth();
+        }
+        ColorImage full = new ColorImage(width, imgs.get(0).getHeight());
+        int index = 0;
+        for (ColorImage i : imgs) {
+            for (int j = 0; j < i.getWidth(); j++, index++) {
+                for (int k = 0; k < i.getHeight(); k++) {
+                    full.setColor(index, k, i.getColor(j, k));
+                }
+            }
+        }
+        return full;
+
     }
 }

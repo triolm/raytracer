@@ -119,26 +119,26 @@ public class SceneCreator {
                                 new Vector(0, -.02, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
                                 20, // field of view
-                                xResolution / yResolution, .25, 19); // aspect ratio
+                                xResolution / yResolution, 0, 19); // aspect ratio
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0.5, -14), 1,
-                                new Lambert(Colors.LTRED)));
+                                new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
 
                 s.addSurface(new Cylinder(new Point(-5, -1, -20), new Point(-3, -1, -27), 1,
-                                new Lambert(new Color(1, .75, .5))));
+                                new BlinnPhong(new Color(1, .75, .5), Colors.LTGREY, 5)));
 
                 s.addSurface(new Sphere(new Point(-0, -1, -19), 1,
                                 new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 10)));
 
                 s.addSurface(new Cylinder(new Point(3, -2, -33), new Point(3, 0, -33), 1,
-                                new Lambert(Colors.LTGREEN)));
+                                new BlinnPhong(Colors.LTGREEN, Colors.LTGREY, 5)));
 
                 s.addSurface(new Sphere(new Point(3, -1.25, -20), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
                                 new ImageBlinn("./textures/soccer.png", Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
-                                new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
+                                new BlinnPhong(Colors.LTBLUE, Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(4, -2, -13), new Point(4, -.5, -13), .75,
                                 new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
@@ -241,16 +241,17 @@ public class SceneCreator {
 
         }
 
-        public static Scene cubeTest(double xResolution, double yResolution/* , PerspectiveCamera cam */) {
-                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
-                                new Vector(0, .1, -1), // forward vector/view direction
-                                new Vector(0, 1, 0), // up vector
-                                20, // field of view
-                                xResolution / yResolution, 0, 19); // aspect ratio
+        public static Scene minecraft(double xResolution, double yResolution, PerspectiveCamera cam) {
+
+                // Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
+                // new Vector(0, .1, -1), // forward vector/view direction
+                // new Vector(0, 1, 0), // up vector
+                // 20, // field of view
+                // xResolution / yResolution, 0, 19); // aspect ratio
                 Scene s = new Scene(cam);
 
                 s.addSurface(new MinecraftTree(new Point(2, -1, -7), 1));
-                s.addSurface(new MinecraftTree(new Point(-2, -1, -9), 1.5));
+                // s.addSurface(new MinecraftTree(new Point(-2, -1, -9), 1.5));
                 s.addSurface(new Triangle(new Point(-40, -1, 40),
                                 new Point(40, -1, 40), new Point(0, -1, -40),
                                 new Lambert(new Color(130 / 255.0, 300 / 255.0, 90 / 255.0))));
@@ -258,8 +259,67 @@ public class SceneCreator {
                 s.addSurface(new Sphere(new Point(0, 0, 0), 20, new Lambert(Colors.LTSKYBLUE)));
 
                 s.addLight(new PointLight(Colors.WHITE, new Point(-10, 5, 0)));
-                s.addLight(new AmbientLight(Colors.DKGREY));
+                // s.addLight(new AmbientLight(Colors.DKGREY));
 
                 return s;
+        }
+
+        public static Scene scene4(double xResolution, double yResolution) {
+                Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
+                                new Vector(0, -.04, -1), // forward vector/view direction
+                                new Vector(0, 1, 0), // up vector
+                                20, // field of view
+                                xResolution / yResolution, 0, 19); // aspect ratio
+                Scene s = new Scene(cam);
+
+                s.addSurface(new Sphere(new Point(0, -.5, -19), 1.5, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new MirrorPhong(new Color(0, 0, 0), Colors.LTGREY, 5, .75, .00)));
+
+                s.addSurface(new Sphere(new Point(3, -1.25, -26), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-3, -1.5, -18), .5, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-3, -1.75, -13), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(3.5, -1.75, -11), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-1, -1.5, -12), .5, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-3, -1.75, -28), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTGREEN, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(5, -1.25, -16), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-6, -1.25, -22), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTGREEN, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(7, -1.5, -32), .5, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTBLUE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-3.75, -1.75, -11), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTBLUE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(1, -1.75, -13), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTGREEN, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(3, -1.5, -15), .5, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
+                                new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
+
+                s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(new Color(.5, .8, 1))));
+
+                s.addLight(new LightBulb(new Color(.33, .1, .33), new Point(3, 10, 0), 2));
+                s.addLight(new LightBulb(new Color(.5, .5, .5), new Point(-10, 10, 0), 2));
+                s.addLight(new AmbientLight(new Color(.15, .15, .15)));
+                return s;
+
         }
 }

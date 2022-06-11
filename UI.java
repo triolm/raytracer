@@ -19,9 +19,9 @@ public class UI {
     public static void launch() throws Exception {
         camPos = new Point(0, 0, 0);
         camForward = new Vector(.01, 0, -1);
-        xRes = 128;
-        yRes = 128;
-        scale = 4;
+        xRes = 50;
+        yRes = 50;
+        scale = 8;
 
         // configure j frame
         JFrame f = new JFrame();// creating instance of JFrame
@@ -94,11 +94,13 @@ public class UI {
         resButton.addActionListener(e -> {
             xRes = (int) xSpinner.getValue();
             yRes = (int) ySpinner.getValue();
-            System.out.println(xRes + " " + yRes);
+            f.setSize(xRes * scale + 100, yRes * scale + 100);
             render(imageLabel);
         });
         scaleButton.addActionListener(e -> {
             scale = (int) scaleSpinner.getValue();
+            f.setSize(xRes * scale + 100, yRes * scale + 100);
+
             render(imageLabel);
         });
         options.addActionListener(e -> {
@@ -161,14 +163,14 @@ public class UI {
         Scene s;
         switch (currentScene) {
             case "1":
+                s = SceneCreator.UIScene(xRes, yRes, cam);
+                break;
+            case "2":
                 s = SceneCreator.UIScene2(xRes, yRes, cam);
                 break;
-            // case "2":
-            // s = SceneCreator.cubeTest(xRes, yRes, cam);
-            // break;
             default:
             case "0":
-                s = SceneCreator.UIScene(xRes, yRes, cam);
+                s = SceneCreator.minecraft(xRes, yRes, cam);
                 break;
 
         }
