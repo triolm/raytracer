@@ -322,4 +322,28 @@ public class SceneCreator {
                 return s;
 
         }
+
+        public static Scene pokemon(double xResolution, double yResolution) {
+                Camera cam = new PerspectiveCamera(new Point(0, 0, -13), // camera location
+                                new Vector(-.03, 0, 1), // forward vector/view direction
+                                new Vector(0, 1, 0), // up vector
+                                30, // field of view
+                                xResolution / yResolution); // aspect ratio
+                Scene s = new Scene(cam);
+                s.addLight(new PointLight(Colors.WHITE, new Point(10, 10, -15)));
+                s.addLight(new AmbientLight(Colors.DKGREY));
+
+                s.addSurface(new Triangle(new Point(-1000, -2, -1000), new Point(1000, -2, -1000),
+                                new Point(0, -2, 1000), new MirrorPhong(Colors.LTGREY, Colors.WHITE, 5,.5,.01)));
+                s.addSurface(new Sphere(new Point(0, 0, 0), 40, new Lambert(new Color(.75, .75, 1))));
+
+                OBJParser.parse("./assets/bulbasaur.obj", s, .1, new Vector(-5, -2, 0),
+                                new Lambert(new Color(.5, 1, .8)));
+                OBJParser.parse("./assets/charmander.obj", s, .1, new Vector(-1, -2, 0),
+                                new Lambert(new Color(1, .6, .5)));
+                OBJParser.parse("./assets/squirtle.obj", s, .1, new Vector(3, -2, 0),
+                                new Lambert(new Color(.4, .7, 1)));
+
+                return s;
+        }
 }

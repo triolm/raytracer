@@ -29,4 +29,8 @@ public class Point {
         return new Vector(x - p.getX(), y - p.getY(), z - p.getZ());
     }
 
+    public String toString() {
+        return this.getX() + " " + this.getY() + " " + this.getZ();
+    }
+
 }

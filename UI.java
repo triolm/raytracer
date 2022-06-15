@@ -72,7 +72,7 @@ public class UI {
 
         dialog.add(resContainer);
 
-        SpinnerNumberModel scaleModel = new SpinnerNumberModel(4, 1, 20, 1);
+        SpinnerNumberModel scaleModel = new SpinnerNumberModel(scale, 1, 20, 1);
         JSpinner scaleSpinner = new JSpinner(scaleModel);
         JButton scaleButton = new JButton("Apply");
         JPanel scaleContainer = new JPanel();
