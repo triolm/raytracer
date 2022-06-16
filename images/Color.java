@@ -21,6 +21,8 @@ public class Color {
         return b;
     }
 
+
+    //converts from Color to int with RGB values
     public int toARGB() {
         int ir = (int) (Math.min(Math.max(r, 0), 1) * 255 + 0.1);
         int ig = (int) (Math.min(Math.max(g, 0), 1) * 255 + 0.1);
@@ -28,6 +30,7 @@ public class Color {
         return (ir << 16) | (ig << 8) | (ib << 0);
     }
 
+    //converts from ARGB int to Color object
     public static Color fromARGB(int argb) {
         double b = ((argb) & 0xFF) / 255.0;
         double g = ((argb >> 8) & 0xFF) / 255.0;

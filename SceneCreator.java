@@ -8,6 +8,7 @@ import shapes.complex.*;
 
 public class SceneCreator {
 
+        // shapes floating in space
         public static Scene scene1(double xResolution, double yResolution) {
                 PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, .01, -1), // forward vector/view direction
@@ -74,6 +75,7 @@ public class SceneCreator {
                 return s;
         }
 
+        // colorful spheres
         public static Scene colorTest(double xResolution, double yResolution) {
                 PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, 0, -1), // forward vector/view direction
@@ -114,6 +116,7 @@ public class SceneCreator {
                 return s;
         }
 
+        // rainbow shapes on gray plane
         public static Scene scene3(double xResolution, double yResolution) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, -.02, -1), // forward vector/view direction
@@ -154,6 +157,7 @@ public class SceneCreator {
 
         }
 
+        // similar to scene1
         public static Scene UIScene(double xResolution, double yResolution, PerspectiveCamera cam) {
                 Scene s = new Scene(cam);
 
@@ -174,6 +178,7 @@ public class SceneCreator {
                 return s;
         }
 
+        // spheres around middle
         public static Scene UIScene2(double xResolution, double yResolution, PerspectiveCamera cam) {
                 Scene s = new Scene(cam);
 
@@ -198,6 +203,7 @@ public class SceneCreator {
                 return s;
         }
 
+        // earth spinning
         public static Scene Movie(double xResolution, double yResolution, int frame) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, -.05, -1), // forward vector/view direction
@@ -242,6 +248,7 @@ public class SceneCreator {
 
         }
 
+        // minecraft trees
         public static Scene minecraft(double xResolution, double yResolution, PerspectiveCamera cam) {
 
                 // Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
@@ -265,6 +272,7 @@ public class SceneCreator {
                 return s;
         }
 
+        // soccer ball rolling
         public static Scene scene4(double xResolution, double yResolution, double time) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, -.04, -1), // forward vector/view direction
@@ -332,6 +340,7 @@ public class SceneCreator {
 
         }
 
+        // starter pokemon OBJs
         public static Scene pokemon(double xResolution, double yResolution) {
                 Camera cam = new PerspectiveCamera(new Point(0, 0, -13), // camera location
                                 new Vector(-.03, 0, 1), // forward vector/view direction

@@ -42,6 +42,7 @@ public class Scene {
             return c;
         }
         for (Light i : lights) {
+            // if it's an ambient light. don't calculate distance & direction
             if (i instanceof AmbientLight) {
                 c = c.tint(
                         smallest.getMaterial().getColor(smallest).shade(i.computeLightColor(smallest.getPosition())));
@@ -57,6 +58,7 @@ public class Scene {
                 smallest.getNormal().getDY() + Math.random() * dev * 2 - dev,
                 smallest.getNormal().getDZ() + Math.random() * dev * 2 - dev);
 
+        // reflection
         Vector reflect = ogDir.scale((ogDir.dot(r.getDirection().scale(-1))) * 2)
                 .subtract(r.getDirection().scale(-1)).normalize();
         Ray reflectRay = new Ray(smallest.getPosition(), reflect, Math.random());
@@ -77,6 +79,7 @@ public class Scene {
 
     }
 
+    // overloaded to omit progress bar param
     public ColorImage render(int xRes, int yRes, int numSamples) {
         return render(xRes, yRes, numSamples, false);
     }

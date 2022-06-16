@@ -19,6 +19,7 @@ public class RaytracerDriver {
 
             System.out.println("Rendering images...");
 
+            // paralellism
             ArrayList<Pair<Integer>> l = Pair.split(cores, xResolution);
             List<ColorImage> arr = l.parallelStream().map((Pair<Integer> p) -> s.renderParallel(p,
                     xResolution, yResolution, aa, false))

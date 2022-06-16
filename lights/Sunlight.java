@@ -10,6 +10,7 @@ public class Sunlight extends DirectionalLight {
 
     }
 
+    // converts time double to a color for sunset
     public static Color getColorFromTime(double time) {
         double r = .1;
         double g = .1;
@@ -37,6 +38,7 @@ public class Sunlight extends DirectionalLight {
 
     }
 
+    // places light in accurate position
     public static Vector getVectorFromTime(double time) {
         double dx;
         if (time < 18)

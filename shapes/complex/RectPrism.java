@@ -7,6 +7,7 @@ import shapes.*;
 public class RectPrism extends Surface {
     Surface[] shapes;
 
+    // unrotated rectangular prism
     public RectPrism(Point o, double width, double height, double depth, Material m) {
         shapes = new Surface[6];
         Point w = o.add(new Vector(width, 0, 0));

@@ -33,6 +33,7 @@ public class ColorImage {
         grid[x][y] = c;
     }
 
+    // converts from ColorImage to Java BufferedImage
     public BufferedImage toBufferedImage() {
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         for (int x = 0; x < getWidth(); x++) {
@@ -44,6 +45,7 @@ public class ColorImage {
         return bi;
     }
 
+    // Write image to file
     public static void save(String filename, ColorImage image) {
         try {
 
@@ -59,6 +61,7 @@ public class ColorImage {
         }
     }
 
+    // grayscale
     public ColorImage toMonochrome() {
         ColorImage newImage = new ColorImage(this.getWidth(), this.getHeight());
         for (int i = 0; i < this.getWidth(); i++) {
@@ -75,6 +78,7 @@ public class ColorImage {
         return newImage;
     }
 
+    // contrast on image
     public ColorImage contrast(double f) {
         ColorImage newImage = new ColorImage(this.getWidth(), this.getHeight());
         for (int i = 0; i < this.getWidth(); i++) {
@@ -88,6 +92,7 @@ public class ColorImage {
         return newImage;
     }
 
+    // sepia filter
     public ColorImage toSepia() {
         ColorImage newImage = new ColorImage(this.getWidth(), this.getHeight());
         for (int i = 0; i < this.getWidth(); i++) {
@@ -108,6 +113,7 @@ public class ColorImage {
         return newImage;
     }
 
+    // converts from buffered image to ColorImage
     public static ColorImage fromBufferedImage(BufferedImage img) {
         ColorImage cImage = new ColorImage(img.getWidth(), img.getHeight());
         for (int i = 0; i < img.getWidth(); i++) {
@@ -118,6 +124,7 @@ public class ColorImage {
         return cImage;
     }
 
+    // gets ColorImage from file
     public static ColorImage fromFile(String path) {
         try {
             return fromBufferedImage(ImageIO.read(new File(path)));
@@ -126,6 +133,7 @@ public class ColorImage {
         }
     }
 
+    // conbines horizontal section of images
     public static ColorImage merge(List<ColorImage> imgs) {
         int width = 0;
         for (ColorImage i : imgs) {

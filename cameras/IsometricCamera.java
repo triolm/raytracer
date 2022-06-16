@@ -28,7 +28,6 @@ public class IsometricCamera extends Camera {
 
     public Ray generateRay(double u, double v) {
         Point ipp = imagePlanePoint(u, v).add(forward.scale(-1));
-        // Vector rayVector = ipp.subtract(position);
         return new Ray(ipp, forward, Math.random());
     }
 

@@ -18,6 +18,7 @@ public class Pair<T> {
         return second;
     }
 
+    //splits resolutions into sections for multi threading
     public static ArrayList<Pair<Integer>> split(int cores, int xRes) {
         ArrayList<Pair<Integer>> l = new ArrayList<Pair<Integer>>();
         for (int i = 0; i < cores; i++) {

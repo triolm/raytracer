@@ -4,12 +4,6 @@ import geometry.*;
 import mesh.*;
 import shapes.Surface;
 
-/**
- * Represents a sphere in 3D space.
- * 
- * @author Ben Farrar
- * @version 2019.05.22
- */
 public class MovingSphere extends Surface {
     private Point center;
     private double r;

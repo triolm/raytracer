@@ -8,6 +8,7 @@ public class Cylinder extends Surface {
 
     private Surface[] surfaces;
 
+    //two circular sides and one tube
     public Cylinder(Point v1, Point v2, double radius, Material m) {
         surfaces = new Surface[3];
         surfaces[0] = new Tube(v1, v2, radius, m);

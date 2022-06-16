@@ -23,6 +23,8 @@ public class DirectionalLight extends Light {
         return color;
     }
 
+    // return the max distance apart objects can be in order for a shadow to form.
+    // this prevents the skybox from casting a shadow on objects at its center
     public double computeLightDistance(Point surfacePoint) {
         return maxShadowDist;
     }
