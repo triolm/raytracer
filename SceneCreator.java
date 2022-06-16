@@ -123,31 +123,32 @@ public class SceneCreator {
                 Scene s = new Scene(cam);
 
                 s.addSurface(new Cone(new Point(-4.5, -2, -14), new Point(-4.5, 0.5, -14), 1,
-                                new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
+                                new Lambert(Colors.LTRED)));
 
                 s.addSurface(new Cylinder(new Point(-5, -1, -20), new Point(-3, -1, -27), 1,
-                                new BlinnPhong(new Color(1, .75, .5), Colors.LTGREY, 5)));
+                                new Lambert(new Color(1, .75, .5))));
 
                 s.addSurface(new Sphere(new Point(-0, -1, -19), 1,
-                                new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 10)));
+                                new Phong(Colors.LTYELLOW, Colors.LTGREY, 10)));
 
                 s.addSurface(new Cylinder(new Point(3, -2, -33), new Point(3, 0, -33), 1,
-                                new BlinnPhong(Colors.LTGREEN, Colors.LTGREY, 5)));
+                                new Lambert(Colors.LTGREEN)));
 
-                s.addSurface(new Sphere(new Point(3, -1.25, -20), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
-                                new ImageBlinn("./textures/soccer.png", Colors.LTGREY, 5)));
+                // s.addSurface(new Sphere(new Point(3, -1.25, -20), .75, new Vector(0, 0, 1),
+                // new Vector(0, -1, 0),
+                // new ImageBlinn("./assets/soccer.png", Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(6, -2, -26), new Point(6, 0, -26), 1,
-                                new BlinnPhong(Colors.LTBLUE, Colors.LTGREY, 5)));
+                                new Phong(Colors.LTBLUE, Colors.LTGREY, 5)));
 
                 s.addSurface(new Cone(new Point(4, -2, -13), new Point(4, -.5, -13), .75,
-                                new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
+                                new Phong(Colors.LTPURPLE, Colors.LTGREY, 5)));
 
                 s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
                                 new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));
                 s.addSurface(new Sphere(new Point(0, 0, 0), 50, new Lambert(new Color(.8, .8, 1))));
 
-                s.addLight(new LightBulb(new Color(.88, .8, .88), new Point(10, 10, 0), 2));
+                s.addLight(new LightBulb(new Color(.88, .8, .88), new Point(10, 10, 0), 0));
                 s.addLight(new AmbientLight(new Color(.15, .15, .15)));
                 return s;
 
@@ -334,7 +335,7 @@ public class SceneCreator {
                 s.addLight(new AmbientLight(Colors.DKGREY));
 
                 s.addSurface(new Triangle(new Point(-1000, -2, -1000), new Point(1000, -2, -1000),
-                                new Point(0, -2, 1000), new MirrorPhong(Colors.LTGREY, Colors.WHITE, 5,.5,.01)));
+                                new Point(0, -2, 1000), new MirrorPhong(Colors.LTGREY, Colors.WHITE, 5, .5, .01)));
                 s.addSurface(new Sphere(new Point(0, 0, 0), 40, new Lambert(new Color(.75, .75, 1))));
 
                 OBJParser.parse("./assets/bulbasaur.obj", s, .1, new Vector(-5, -2, 0),

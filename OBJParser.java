@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import geometry.*;
-import images.Colors;
-import mesh.Lambert;
 import mesh.Material;
 import shapes.Triangle;
 
@@ -22,6 +20,7 @@ public class OBJParser {
                     continue;
                 }
                 if (ln.startsWith("v")) {
+                    // https://stackoverflow.com/questions/225337/how-to-split-a-string-with-any-whitespace-chars-as-delimiters
                     String[] arr = ln.substring(1).trim().split("\\s+");
                     pts.add(new Point(Double.parseDouble(arr[0].trim()) * scale,
                             Double.parseDouble(arr[2].trim()) * scale,

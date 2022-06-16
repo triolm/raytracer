@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import cameras.Camera;
 import geometry.*;
 import images.*;
-import mesh.*;
 import shapes.Surface;
 import lights.*;
 

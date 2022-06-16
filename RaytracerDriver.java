@@ -1,8 +1,4 @@
-import images.Color;
 import images.ColorImage;
-import images.Colors;
-import mesh.Lambert;
-import shapes.Triangle;
 import geometry.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +7,15 @@ import java.util.stream.Collectors;
 public class RaytracerDriver {
     public static void main(String[] args) throws Exception {
 
-        // UI.launch();
-
         // Image size
-        int xResolution = 800;
-        int yResolution = 600;
+        int xResolution = 1024;
+        int yResolution = 768;
         int cores = 4;
-        int aa = 1;
+        int aa = 16;
 
         // for (int i = 0; i < 20; i++) {
         System.out.println("Creating scene...");
-        Scene s = SceneCreator.pokemon(xResolution, yResolution);
+        Scene s = SceneCreator.scene3(xResolution, yResolution);
 
         System.out.println("Rendering images...");
 
@@ -30,7 +24,7 @@ public class RaytracerDriver {
                 xResolution, yResolution, aa, false))
                 .collect(Collectors.toList());
 
-        String filename = "_output/testobj.png";
+        String filename = "_output/baseline2.png";
 
         System.out.println("Saving files...");
         ColorImage.save(filename, ColorImage.merge(arr));

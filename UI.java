@@ -5,16 +5,22 @@ import images.ColorImage;
 import geometry.*;
 import java.awt.event.*;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.FlowLayout;
 
 public class UI {
+    static Scene s;
     static Point camPos;
     static Vector camForward;
     static PerspectiveCamera cam;
     final static double angle = 0.04908738521;
     static String currentScene = "0";
     static int xRes, yRes, scale;
+
+    public static void main(String[] args) throws Exception {
+        launch();
+    }
 
     public static void launch() throws Exception {
         camPos = new Point(0, 0, 0);
@@ -45,7 +51,15 @@ public class UI {
         JDialog dialog = new JDialog(f, "ee");
         dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.PAGE_AXIS));
 
-        dialog.setSize(350, 150);
+        dialog.setSize(350, 250);
+
+        JPanel controls = new JPanel();
+        controls.add(new JLabel("WASD: Move front/left/back/right"));
+        controls.add(new JLabel("Up/Down arrows: Move up/down"));
+        controls.add(new JLabel("Left/Right arrows: Turn left/right"));
+        // https://stackoverflow.com/questions/5921175/how-to-set-jpanels-width-and-height
+        controls.setPreferredSize(new Dimension(350, 60));
+        dialog.add(controls);
 
         String[] sceneNames = { "0", "1", "2", "3" };
         JComboBox<String> scenes = new JComboBox<String>(sceneNames);
@@ -89,7 +103,7 @@ public class UI {
             currentScene = (String) scenes.getSelectedItem();
             camPos = new Point(0, 0, 0);
             camForward = new Vector(.01, 0, -1);
-            render(imageLabel);
+            renderNew(imageLabel);
         });
         resButton.addActionListener(e -> {
             xRes = (int) xSpinner.getValue();
@@ -107,6 +121,7 @@ public class UI {
             dialog.setVisible(true);
         });
 
+        s = SceneCreator.minecraft(xRes, yRes, cam);
         render(imageLabel);
 
         f.addKeyListener(new KeyListener() {
@@ -159,8 +174,15 @@ public class UI {
 
     public static void render(JLabel imageLabel) {
         cam = new PerspectiveCamera(camPos, camForward, new Vector(0, 1, 0), 20, (double) xRes / yRes);
+        s.setCamera(cam);
 
-        Scene s;
+        ColorImage image = s.render(xRes, yRes, 1);
+        imageLabel.setIcon(
+                new ImageIcon(
+                        image.toBufferedImage().getScaledInstance(xRes * scale, yRes * scale, Image.SCALE_DEFAULT)));
+    }
+
+    public static void renderNew(JLabel imageLabel) {
         switch (currentScene) {
             case "1":
                 s = SceneCreator.UIScene(xRes, yRes, cam);
@@ -174,9 +196,6 @@ public class UI {
                 break;
 
         }
-        ColorImage image = s.render(xRes, yRes, 1);
-        imageLabel.setIcon(
-                new ImageIcon(
-                        image.toBufferedImage().getScaledInstance(xRes * scale, yRes * scale, Image.SCALE_DEFAULT)));
+        render(imageLabel);
     }
 }
