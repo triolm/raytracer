@@ -265,16 +265,18 @@ public class SceneCreator {
                 return s;
         }
 
-        public static Scene scene4(double xResolution, double yResolution) {
+        public static Scene scene4(double xResolution, double yResolution, double time) {
                 Camera cam = new DOFCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, -.04, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
-                                20, // field of view
-                                xResolution / yResolution, 0, 19); // aspect ratio
+                                20 - time / 10, // field of view
+                                xResolution / yResolution, .25, 5 + time); // aspect ratio
                 Scene s = new Scene(cam);
 
-                s.addSurface(new Sphere(new Point(0, -.5, -19), 1.5, new Vector(0, 0, 1), new Vector(0, -1, 0),
-                                new MirrorPhong(new Color(0, 0, 0), Colors.LTGREY, 5, .75, .00)));
+                s.addSurface(new Sphere(new Point(0, -1.5, -5 - time), .5,
+                                new Vector(0, 0, 1).rotateX(.3 * time),
+                                new Vector(0, -1, 0).rotateX(.3 * time),
+                                new ImageBlinn("./assets/soccer.png", Colors.LTGREY, 5)));
 
                 s.addSurface(new Sphere(new Point(3, -1.25, -26), .75, new Vector(0, 0, 1), new Vector(0, -1, 0),
                                 new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 5)));
@@ -284,6 +286,9 @@ public class SceneCreator {
 
                 s.addSurface(new Sphere(new Point(-3, -1.75, -13), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
                                 new BlinnPhong(Colors.LTYELLOW, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(-2, -1.75, -9), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
 
                 s.addSurface(new Sphere(new Point(3.5, -1.75, -11), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
                                 new BlinnPhong(Colors.LTRED, Colors.LTGREY, 5)));
@@ -311,6 +316,9 @@ public class SceneCreator {
 
                 s.addSurface(new Sphere(new Point(3, -1.5, -15), .5, new Vector(0, 0, 1), new Vector(0, -1, 0),
                                 new BlinnPhong(Colors.LTPURPLE, Colors.LTGREY, 5)));
+
+                s.addSurface(new Sphere(new Point(1.5, -1.75, -9), .25, new Vector(0, 0, 1), new Vector(0, -1, 0),
+                                new BlinnPhong(Colors.LTBLUE, Colors.LTGREY, 5)));
 
                 s.addSurface(new Triangle(new Point(0, -2, 0), new Point(-200, -2, -200), new Point(200, -2, -200),
                                 new MirrorPhong(Colors.WHITE, Colors.GREY, 5, .5, .01)));

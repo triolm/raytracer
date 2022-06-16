@@ -10,7 +10,7 @@ public class Colors {
     public static final Color LTORANGE = new Color(1, .75, .25);
 
     public static final Color LTBROWN = new Color(.5, .3, .2);
-    public static final Color BROWN = new Color(.25, .15, 1);
+    public static final Color BROWN = new Color(.25, .15, .1);
     public static final Color DKBROWN = new Color(.2, .1, 0);
 
     public static final Color YELLOW = new Color(1, 1, 0);
