@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RaytracerDriver {
+
+    // Run UI.JAVA for UI
     public static void main(String[] args) throws Exception {
 
         // Image size
@@ -15,7 +17,7 @@ public class RaytracerDriver {
 
         for (int i = 0; i < 20; i += 1) {
             System.out.println("Creating scene...");
-            Scene s = SceneCreator.scene4(xResolution, yResolution, i);
+            Scene s = SceneCreator.scene1(xResolution, yResolution);
 
             System.out.println("Rendering images...");
 
