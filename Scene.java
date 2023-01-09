@@ -7,6 +7,15 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
+    final double maxIterations = 600;
+    // final double timeScale = 1;
+    final double timeScale = 1700000;
+    final double speedOfLight = 299792458;
+    final double G = 6.6743e-11d;
+    final double blackHoleMass = 8.26e36d * 1e50;
+    final double blackHoleRadius = 2800;
+    final Point blackHolePosition = new Point(0, -100, -3000);
+
     private Camera camera;
     private ArrayList<Surface> surfaces;
     private ArrayList<Light> lights;
@@ -79,6 +88,13 @@ public class Scene {
 
     }
 
+    public void progress(int c, int t) {
+        if (c % ((int) t / 20) == 0) {
+            System.out.print("\b".repeat(20) + "█".repeat((int) c * 20 / t + 1)
+                    + "░".repeat((int) 20 - (c * 20 / t + 1)));
+        }
+    }
+
     // overloaded to omit progress bar param
     public ColorImage render(int xRes, int yRes, int numSamples) {
         return render(xRes, yRes, numSamples, false);
@@ -88,29 +104,54 @@ public class Scene {
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
+            // progress bar
             if (showProgress) {
-                if (x % ((int) xRes / 20) == 0) {
-                    System.out.print("\b".repeat(20) + "█".repeat((int) x * 20 / xRes + 1)
-                            + "░".repeat((int) 20 - (x * 20 / xRes + 1)));
-                }
+                progress(x, xRes);
             }
+            // loop through pixels
             for (int y = 0; y < yRes; y++) {
                 Color c = new Color(0, 0, 0);
 
+                // loop thruough anti aliasing
                 for (int i = 0; i < aaRes; i++) {
                     for (int j = 0; j < aaRes; j++) {
 
+                        // anti aliasing position
                         double u = (x + (i + 0.5) / aaRes) / xRes;
                         double v = (y + (i + 0.5) / aaRes) / yRes;
 
+                        // cast ray
                         Ray ray = camera.generateRay(u, v);
                         Color sample = null;
-                        for (Surface s : surfaces) {
-                            Intersection sect = s.intersect(ray);
-                            if (sect != null) {
-                                sample = computeVisibleColor(ray, 3);
+                        for (int t = 0; t < maxIterations; t++) {
+                            for (Surface s : surfaces) {
+                                Intersection sect = s.intersect(ray);
+                                // System.out.println(sect);
+                                if (sect != null) {
+                                    if (ray.getPosition().getDist(sect.getPosition()) <= speedOfLight / timeScale) {
+                                        sample = computeVisibleColor(ray, 3);
+                                        break;
+                                    }
+                                }
                             }
+                            // System.out.println(ray.getDirection() + " " + t);
+                            Vector rayVector = ray.getDirection();
+                            // .normalize().scale(speedOfLight / timeScale);
+                            Point rayPoint = ray.getPosition();
+
+                            double dist = rayPoint.getDist(blackHolePosition);
+                            double gravity = (blackHoleMass / Math.pow(dist, 2.0)) / timeScale;
+                            Vector gravityVector = blackHolePosition.subtract(rayPoint)
+                                    .normalize().scale(gravity);
+
+                            Vector newRayVector = rayVector.normalize().scale(speedOfLight / timeScale)
+                                    .cross(gravityVector);
+
+                            Point newRayPoint = rayPoint.add(newRayVector);
+
+                            ray = new Ray(newRayPoint, newRayVector, 0);
                         }
+
                         if (sample != null) {
                             c = c.add(sample);
                         }
@@ -123,42 +164,6 @@ public class Scene {
         if (showProgress) {
             System.out.println();
         }
-        return img;
-    }
-
-    public ColorImage renderParallel(Pair<Integer> p, int xRes, int yRes, int numSamples, boolean showProgress) {
-        long time = System.currentTimeMillis();
-        int aaRes = (int) Math.sqrt(numSamples);
-        ColorImage img = new ColorImage(p.getSecond() - p.getFirst(), yRes);
-        for (int x = 0; x < p.getSecond() - p.getFirst(); x++) {
-            for (int y = 0; y < yRes; y++) {
-                Color c = new Color(0, 0, 0);
-
-                for (int i = 0; i < aaRes; i++) {
-                    for (int j = 0; j < aaRes; j++) {
-
-                        double u = (x + p.getFirst() + (i + 0.5) / aaRes) / xRes;
-                        double v = (y + (i + 0.5) / aaRes) / yRes;
-
-                        Ray ray = camera.generateRay(u, v);
-                        Color sample = null;
-                        for (Surface s : surfaces) {
-                            Intersection sect = s.intersect(ray);
-                            if (sect != null) {
-                                sample = computeVisibleColor(ray, 3);
-                            }
-                        }
-                        if (sample != null) {
-                            c = c.add(sample);
-                        }
-                    }
-                }
-                c = c.scale(1 / Math.pow(aaRes, 2));
-                img.setColor(x, y, c);
-            }
-        }
-        long time2 = System.currentTimeMillis();
-        System.out.println("Time elapsed: " + (time2 - time) + " milliseconds");
         return img;
     }
 }

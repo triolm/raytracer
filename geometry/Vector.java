@@ -73,4 +73,7 @@ public class Vector {
                 .normalize();
     }
 
+    public String toString() {
+        return this.getDX() + " " + this.getDY() + " " + this.getDZ();
+    }
 }

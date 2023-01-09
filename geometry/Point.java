@@ -33,4 +33,7 @@ public class Point {
         return this.getX() + " " + this.getY() + " " + this.getZ();
     }
 
+    public double getDist(Point p) {
+        return Math.sqrt(x - p.getX() + y - p.getY() + z - p.getZ());
+    }
 }

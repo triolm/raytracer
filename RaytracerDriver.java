@@ -11,29 +11,22 @@ public class RaytracerDriver {
 
         // Image size
         int xResolution = 200;
-        int yResolution = 150;
-        int cores = 4;
+        int yResolution = 200;
         int aa = 1;
 
-        for (int i = 0; i < 20; i += 1) {
-            System.out.println("Creating scene...");
-            Scene s = SceneCreator.scene1(xResolution, yResolution);
+        System.out.println("Creating scene...");
+        Scene s = SceneCreator.scene1(xResolution, yResolution);
 
-            System.out.println("Rendering images...");
+        System.out.println("Rendering images...");
 
-            // paralellism
-            ArrayList<Pair<Integer>> l = Pair.split(cores, xResolution);
-            List<ColorImage> arr = l.parallelStream().map((Pair<Integer> p) -> s.renderParallel(p,
-                    xResolution, yResolution, aa, false))
-                    .collect(Collectors.toList());
+        ColorImage arr = s.render(xResolution, yResolution, aa, true);
 
-            String filename = "_output/movietest/" + i + ".png";
+        String filename = "_output/test.png";
 
-            System.out.println("Saving files...");
-            ColorImage.save(filename, ColorImage.merge(arr));
+        System.out.println("Saving files...");
+        ColorImage.save(filename, arr);
 
-            System.out.println("Done");
-        }
+        System.out.println("Done");
 
     }
 }
