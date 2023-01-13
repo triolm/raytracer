@@ -12,7 +12,7 @@ public class SceneCreator {
                 PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, .01, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
-                                40, // field of view
+                                60, // field of view
                                 xResolution / yResolution); // aspect ratio
                 Scene s = new Scene(cam);
 

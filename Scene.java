@@ -7,10 +7,13 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final double maxIterations = 1000;
-    // final double timeScale = 1;
+    final double maxIterations = 10;
+
+    // speed of light
     final double c = 299792458;
-    final double timeScale = 10000;
+
+    // time run at 1/timescale speed
+    final double timeScale = 35000;
     final double scaledC = c / timeScale;
     final double G = 6.6743e-11d;
     final double blackHoleMass = 8.26e36d;
@@ -125,11 +128,11 @@ public class Scene {
                         // cast ray
                         Ray ray = camera.generateRay(u, v);
                         Color sample = null;
-                        for (int t = 0; t < maxIterations; t++) {
+                        for (int step = 0; step < maxIterations; step++) {
                             for (Surface s : surfaces) {
                                 Intersection sect = s.intersect(ray);
                                 if (sect != null) {
-                                    // print(scaledC, t, sect.getPosition());
+                                    // print(step);
                                     if (ray.getPosition().getDist(sect.getPosition()) <= scaledC) {
                                         sample = computeVisibleColor(ray, 0);
                                     }
@@ -149,12 +152,12 @@ public class Scene {
                                     / Math.pow(timeScale, 2);
                             Vector gravityVector = blackHolePosition.subtract(rayPoint)
                                     .normalize().scale(gravityAccel);
-                            print(t, gravityAccel);
 
                             Vector newRayVector = rayVector.add(gravityVector)
                                     .normalize().scale(scaledC);
 
                             Point newRayPoint = rayPoint.add(rayVector);
+                            // print(step, newRayVector, "\n", rayVector, "\n\n");
 
                             ray = new Ray(newRayPoint, newRayVector, 0);
                         }
