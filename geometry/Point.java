@@ -34,6 +34,9 @@ public class Point {
     }
 
     public double getDist(Point p) {
-        return Math.sqrt(x - p.getX() + y - p.getY() + z - p.getZ());
+        return Math.sqrt(
+                Math.pow(x - p.getX(), 2.0)
+                        + Math.pow(y - p.getY(), 2.0)
+                        + Math.pow(z - p.getZ(), 2.0));
     }
 }

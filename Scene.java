@@ -7,14 +7,15 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final double maxIterations = 600;
+    final double maxIterations = 1000;
     // final double timeScale = 1;
-    final double timeScale = 1700000;
-    final double speedOfLight = 299792458;
+    final double c = 299792458;
+    final double timeScale = 10000;
+    final double scaledC = c / timeScale;
     final double G = 6.6743e-11d;
-    final double blackHoleMass = 8.26e36d * 1e50;
-    final double blackHoleRadius = 2800;
-    final Point blackHolePosition = new Point(0, -100, -3000);
+    final double blackHoleMass = 8.26e36d;
+    // final double blackHoleMass = 1;
+    final static Point blackHolePosition = new Point(0, 0, -20000);
 
     private Camera camera;
     private ArrayList<Surface> surfaces;
@@ -101,6 +102,7 @@ public class Scene {
     }
 
     public ColorImage render(int xRes, int yRes, int numSamples, boolean showProgress) {
+        print(scaledC);
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
@@ -110,7 +112,7 @@ public class Scene {
             }
             // loop through pixels
             for (int y = 0; y < yRes; y++) {
-                Color c = new Color(0, 0, 0);
+                Color color = new Color(0, 0, 0);
 
                 // loop thruough anti aliasing
                 for (int i = 0; i < aaRes; i++) {
@@ -126,44 +128,57 @@ public class Scene {
                         for (int t = 0; t < maxIterations; t++) {
                             for (Surface s : surfaces) {
                                 Intersection sect = s.intersect(ray);
-                                // System.out.println(sect);
                                 if (sect != null) {
-                                    if (ray.getPosition().getDist(sect.getPosition()) <= speedOfLight / timeScale) {
-                                        sample = computeVisibleColor(ray, 3);
-                                        break;
+                                    // print(scaledC, t, sect.getPosition());
+                                    if (ray.getPosition().getDist(sect.getPosition()) <= scaledC) {
+                                        sample = computeVisibleColor(ray, 0);
                                     }
                                 }
                             }
-                            // System.out.println(ray.getDirection() + " " + t);
-                            Vector rayVector = ray.getDirection();
+                            if (sample != null) {
+                                break;
+                            }
+                            Vector rayVector = ray.getDirection().scale(scaledC);
+
                             // .normalize().scale(speedOfLight / timeScale);
                             Point rayPoint = ray.getPosition();
 
                             double dist = rayPoint.getDist(blackHolePosition);
-                            double gravity = (blackHoleMass / Math.pow(dist, 2.0)) / timeScale;
+                            // why do i need to square the time scale
+                            double gravityAccel = ((G * blackHoleMass) / Math.pow(dist, 2.0))
+                                    / Math.pow(timeScale, 2);
                             Vector gravityVector = blackHolePosition.subtract(rayPoint)
-                                    .normalize().scale(gravity);
+                                    .normalize().scale(gravityAccel);
+                            print(t, gravityAccel);
 
-                            Vector newRayVector = rayVector.normalize().scale(speedOfLight / timeScale)
-                                    .cross(gravityVector);
+                            Vector newRayVector = rayVector.add(gravityVector)
+                                    .normalize().scale(scaledC);
 
-                            Point newRayPoint = rayPoint.add(newRayVector);
+                            Point newRayPoint = rayPoint.add(rayVector);
 
                             ray = new Ray(newRayPoint, newRayVector, 0);
                         }
 
                         if (sample != null) {
-                            c = c.add(sample);
+                            color = color.add(sample);
                         }
                     }
                 }
-                c = c.scale(1 / Math.pow(aaRes, 2));
-                img.setColor(x, y, c);
+                color = color.scale(1 / Math.pow(aaRes, 2));
+                img.setColor(x, y, color);
             }
         }
         if (showProgress) {
             System.out.println();
         }
         return img;
+    }
+
+    public static void print(Object... args) {
+        String s = "";
+        for (int i = 0; i < args.length; i++) {
+            s += i != 0 ? ", " + args[i] : args[i];
+        }
+        System.out.println(s);
     }
 }
