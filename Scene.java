@@ -7,18 +7,21 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final double maxIterations = 10;
+    final static double maxIterations = 10;
 
     // speed of light
-    final double c = 299792458;
+    final static double c = 299792458;
 
     // time run at 1/timescale speed
-    final double timeScale = 35000;
-    final double scaledC = c / timeScale;
-    final double G = 6.6743e-11d;
-    final double blackHoleMass = 8.26e36d;
+    final static double timeScale = 35000 + 1000;
+    final static double scaledC = c / timeScale;
+    final static double G = 6.6743e-11d;
+    // final static double blackHoleMass = 8.26e36d;
+    final static double blackHoleMass = 8.26e30d * 5;
+    final static double schild = (2 * G * blackHoleMass) / (c * c);
+    // final static double schild = 3000;
     // final double blackHoleMass = 1;
-    final static Point blackHolePosition = new Point(0, 0, -20000);
+    final static Point blackHolePosition = new Point(0, 0, -schild * 2);
 
     private Camera camera;
     private ArrayList<Surface> surfaces;
@@ -105,7 +108,7 @@ public class Scene {
     }
 
     public ColorImage render(int xRes, int yRes, int numSamples, boolean showProgress) {
-        print(scaledC);
+        print(schild);
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
@@ -132,7 +135,6 @@ public class Scene {
                             for (Surface s : surfaces) {
                                 Intersection sect = s.intersect(ray);
                                 if (sect != null) {
-                                    // print(step);
                                     if (ray.getPosition().getDist(sect.getPosition()) <= scaledC) {
                                         sample = computeVisibleColor(ray, 0);
                                     }
@@ -157,9 +159,10 @@ public class Scene {
                                     .normalize().scale(scaledC);
 
                             Point newRayPoint = rayPoint.add(rayVector);
-                            // print(step, newRayVector, "\n", rayVector, "\n\n");
+                            // Point newRayPoint = rayPoint.add(newRayVector);
 
-                            ray = new Ray(newRayPoint, newRayVector, 0);
+                            ray = new Ray(newRayPoint, rayVector, 0);
+                            // ray = new Ray(newRayPoint, newRayVector, 0);
                         }
 
                         if (sample != null) {

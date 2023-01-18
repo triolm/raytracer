@@ -21,7 +21,7 @@ public class RaytracerDriver {
 
         ColorImage arr = s.render(xResolution, yResolution, aa, true);
 
-        String filename = "_output/test.png";
+        String filename = "_output/blackhole.png";
 
         System.out.println("Saving files...");
         ColorImage.save(filename, arr);

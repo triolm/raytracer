@@ -18,18 +18,24 @@ public class SceneCreator {
 
                 // Surface s1 = new Sphere(Scene.blackHolePosition, 2800, new Lambert(new
                 // Color(.6, .65, 1)));
-                Surface s1 = new Sphere(Scene.blackHolePosition, 2800, new ImageLambert("./assets/earth.jpg"));
+                Surface s1 = new Sphere(Scene.blackHolePosition, Scene.schild,
+                                new ImageLambert("./assets/grid.png"));
+                // , new Color(1, 1, 1), 2));
                 s.addSurface(s1);
-                Surface d1 = new Ring(Scene.blackHolePosition, 4000, 0, new Vector(0, .5, .1),
+                Surface d1 = new Ring(Scene.blackHolePosition,
+                                Scene.schild * 2, 0, new Vector(0, 1, .5),
                                 new Lambert(new Color(1, 1, 1)));
                 s.addSurface(d1);
 
-                Light lt1 = new PointLight(new Color(1, .5, .5), new Point(0, 20000,
+                Light lt1 = new PointLight(new Color(1, .5, .5), new Point(0, 200000,
                                 0));
                 s.addLight(lt1);
-                Light lt2 = new PointLight(new Color(.5, .5, .5), new Point(0, -20000,
+                Light lt2 = new PointLight(new Color(.5, 1, .5), new Point(0, -200000,
                                 0));
                 s.addLight(lt2);
+                Light lt3 = new PointLight(new Color(0, 0, 1), new Point(0, 0,
+                                Scene.blackHolePosition.getZ() * 2));
+                s.addLight(lt3);
                 return s;
         }
 
