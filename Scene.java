@@ -7,21 +7,21 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final static double maxIterations = 10;
+    final static double maxIterations = 2000;
 
     // speed of light
     final static double c = 299792458;
 
     // time run at 1/timescale speed
-    final static double timeScale = 35000 + 1000;
+    final static double timeScale = 350000000;
     final static double scaledC = c / timeScale;
     final static double G = 6.6743e-11d;
     // final static double blackHoleMass = 8.26e36d;
-    final static double blackHoleMass = 8.26e30d * 5;
+    final static double blackHoleMass = 8.26e30d / 100;
     final static double schild = (2 * G * blackHoleMass) / (c * c);
     // final static double schild = 3000;
     // final double blackHoleMass = 1;
-    final static Point blackHolePosition = new Point(0, 0, -schild * 2);
+    final static Point blackHolePosition = new Point(0, 0, -schild * 11);
 
     private Camera camera;
     private ArrayList<Surface> surfaces;
@@ -161,8 +161,8 @@ public class Scene {
                             Point newRayPoint = rayPoint.add(rayVector);
                             // Point newRayPoint = rayPoint.add(newRayVector);
 
-                            ray = new Ray(newRayPoint, rayVector, 0);
-                            // ray = new Ray(newRayPoint, newRayVector, 0);
+                            // ray = new Ray(newRayPoint, rayVector, 0);
+                            ray = new Ray(newRayPoint, newRayVector, 0);
                         }
 
                         if (sample != null) {

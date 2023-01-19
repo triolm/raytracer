@@ -10,8 +10,8 @@ public class RaytracerDriver {
     public static void main(String[] args) throws Exception {
 
         // Image size
-        int xResolution = 200;
-        int yResolution = 200;
+        int xResolution = 500;
+        int yResolution = 500;
         int aa = 1;
 
         System.out.println("Creating scene...");
