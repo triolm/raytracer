@@ -10,9 +10,10 @@ public class RaytracerDriver {
     public static void main(String[] args) throws Exception {
 
         // Image size
-        int xResolution = 288;
-        int yResolution = 216;
-        int aa = 1;
+        int imageScale = 18;
+        int xResolution = 16 * imageScale;
+        int yResolution = 9 * imageScale;
+        int aa = 4;
         for (int i = 0; i < 30; i++) {
             System.out.println("Creating scene...");
             Scene s = SceneCreator.rotateBlackHole(xResolution, yResolution, i);
@@ -21,7 +22,7 @@ public class RaytracerDriver {
 
             ColorImage arr = s.render(xResolution, yResolution, aa, true);
 
-            String filename = "_output/rotate/" + i + ".png";
+            String filename = "_output/rotatedoppler/" + i + ".png";
 
             System.out.println("Saving files...");
             ColorImage.save(filename, arr);

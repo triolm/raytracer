@@ -41,7 +41,7 @@ public class Ring extends Surface {
             // polar coords
             Vector polarVector = inter.subtract(center);
             double dist = polarVector.length() / r1;
-            Vector rot = new Vector(-1, 0, 0);
+            Vector rot = new Vector(1, 0, 0);
             double angle = Math.acos(polarVector.normalize().dot(rot));
             double X = (Math.cos(angle) * dist + 1) / 2;
             double Y = (Math.sin(angle) * dist + 1) / 2;
