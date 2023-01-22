@@ -37,11 +37,22 @@ public class Ring extends Surface {
         if (distance > EPSILON) {
             Point inter = ray.evaluate(distance);
             double length = center.subtract(inter).length();
+
+            // polar coords
+            Vector polarVector = inter.subtract(center);
+            double dist = polarVector.length() / r1;
+            Vector rot = new Vector(-1, 0, 0);
+            double angle = Math.acos(polarVector.normalize().dot(rot));
+            double X = (Math.cos(angle) * dist + 1) / 2;
+            double Y = (Math.sin(angle) * dist + 1) / 2;
+
+            // System.out.println(angle);
+
             if (length < r1 && length > r2) {
                 if (normal.dot(ray.getDirection()) > 0) {
-                    return new Intersection(inter, normal.scale(-1), distance, mat);
+                    return new Intersection(inter, normal.scale(-1), distance, X, Y, mat);
                 } else {
-                    return new Intersection(inter, normal, distance, mat);
+                    return new Intersection(inter, normal, distance, X, Y, mat);
                 }
             }
         }

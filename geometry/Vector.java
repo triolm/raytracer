@@ -73,6 +73,11 @@ public class Vector {
                 .normalize();
     }
 
+    public Vector rotateZ(double angle) {
+        return new Vector(dx * Math.sin(angle) + dy * Math.cos(angle), dx * Math.cos(angle) - dy * Math.sin(angle),dz)
+                .normalize();
+    }
+
     public String toString() {
         return this.getDX() + " " + this.getDY() + " " + this.getDZ();
     }

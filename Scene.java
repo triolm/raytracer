@@ -7,17 +7,17 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final static double maxIterations = 2000;
+    final static double maxIterations = 10000 / 2;
 
     // speed of light
     final static double c = 299792458;
 
     // time run at 1/timescale speed
-    final static double timeScale = 350000000;
+    final static double timeScale = 1e6;
     final static double scaledC = c / timeScale;
     final static double G = 6.6743e-11d;
     // final static double blackHoleMass = 8.26e36d;
-    final static double blackHoleMass = 8.26e30d / 100;
+    final static double blackHoleMass = 1e31d;
     final static double schild = (2 * G * blackHoleMass) / (c * c);
     // final static double schild = 3000;
     // final double blackHoleMass = 1;
@@ -108,7 +108,8 @@ public class Scene {
     }
 
     public ColorImage render(int xRes, int yRes, int numSamples, boolean showProgress) {
-        print(schild);
+        print("schild rad:", schild);
+        print("max light dist:", scaledC * maxIterations);
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
