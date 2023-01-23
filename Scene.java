@@ -7,13 +7,13 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final static double maxIterations = 10000 / 2;
+    final static double maxIterations = 7000;
 
     // speed of light
     final static double c = 299792458;
 
     // time run at 1/timescale speed
-    final static double timeScale = 1e6;
+    final static double timeScale = 2e6;
     final static double scaledC = c / timeScale;
     final static double G = 6.6743e-11d;
     // final static double blackHoleMass = 8.26e36d;
