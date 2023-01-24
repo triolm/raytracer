@@ -12,7 +12,8 @@ public class SceneCreator {
                 PerspectiveCamera cam = new PerspectiveCamera(new Point(0, 0, 0), // camera location
                                 new Vector(0, .01, -1), // forward vector/view direction
                                 new Vector(0, 1, 0), // up vector
-                                18, // field of view
+                                30, // field of view
+                                    // 18, // field of view
                                 xResolution / yResolution); // aspect ratio
                 Scene s = new Scene(cam);
 
@@ -21,17 +22,17 @@ public class SceneCreator {
                 // Surface s1 = new Sphere(Scene.blackHolePosition, Scene.schild, new
                 // Lambert(new Color(0, 0, 0)));
                 // s.addSurface(s1);
-                Surface d1 = new Ring(Scene.blackHolePosition,
-                                Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
-                                new Lambert(new Color(1, 1, 1)));
                 // Surface d1 = new Ring(Scene.blackHolePosition,
                 // Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
-                // new ImageLambert("./assets/image23.png"));
+                // new Lambert(new Color(1, 1, 1)));
+                Surface d1 = new Ring(Scene.blackHolePosition,
+                                Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
+                                new ImageLambert("./assets/image23.png"));
                 s.addSurface(d1);
-                // Surface d2 = new Ring(new Point(0, 0, Scene.blackHolePosition.getZ() * 4),
-                // Scene.schild * 30, 0, new Vector(0, 0, 1),
-                // new ImageLambert("./assets/stars2.jpg"));
-                // s.addSurface(d2);
+                Surface d2 = new Ring(new Point(0, 0, Scene.blackHolePosition.getZ() * 4),
+                                Scene.schild * 23, 0, new Vector(0, 0, 1),
+                                new ImageLambert("./assets/grid3.png"));
+                s.addSurface(d2);
 
                 Light lt1 = new PointLight(new Color(1, 1.0, 1.0), new Point(0, 200000,
                                 0));

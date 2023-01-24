@@ -32,6 +32,7 @@ public class Vector {
         return dx * v.getDX() + dy * v.getDY() + dz * v.getDZ();
     }
 
+
     public Vector cross(Vector v) {
         double newDX = dy * v.getDZ() - dz * v.getDY();
         double newDY = dz * v.getDX() - dx * v.getDZ();
