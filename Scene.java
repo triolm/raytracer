@@ -7,20 +7,24 @@ import shapes.Surface;
 import lights.*;
 
 public class Scene {
-    final static double maxIterations = 7000;
+    final static double maxIterations = 15000;
 
-    // speed of light
+    // constants
     final static double c = 299792458;
-
-    // time run at 1/timescale speed
-    final static double timeScale = 2e6;
-    final static double scaledC = c / timeScale;
     final static double G = 6.6743e-11d;
+
+    // one step is 1/timeScale seconds
+    final static double timeScale = 2e6;
+
+    // speed of light scaled for timeScale
+    final static double scaledC = c / timeScale;
+
     // final static double blackHoleMass = 8.26e36d;
     final static double blackHoleMass = 1e31d;
+
+    // Schwartzchild radius
     final static double schild = (2 * G * blackHoleMass) / (c * c);
-    // final static double schild = 3000;
-    // final double blackHoleMass = 1;
+
     final static Point blackHolePosition = new Point(0, 0, -schild * 11);
 
     private Camera camera;
@@ -33,6 +37,7 @@ public class Scene {
         lights = new ArrayList<Light>();
     }
 
+    // add objects to scene ----
     public void addLight(Light li) {
         lights.add(li);
     }
@@ -47,12 +52,15 @@ public class Scene {
 
     public Color computeVisibleColor(Ray r, int bouncesLeft) {
         Intersection smallest = null;
+
+        // find closest shape
         for (Surface i : surfaces) {
             Intersection sect = i.intersect(r);
             if (sect != null && (smallest == null || sect.getDistance() < smallest.getDistance())) {
                 smallest = sect;
             }
         }
+        // start from black and add color
         Color c = new Color(0, 0, 0);
         if (smallest == null) {
             return c;
@@ -83,6 +91,7 @@ public class Scene {
         return c.tint(reflectColor.shade(new Color(reflectivness, reflectivness, reflectivness)));
     }
 
+    // check if light is blocked by another shape
     public boolean isShadowed(Point p, Light li) {
         Ray shadowRay = new Ray(p, li.computeLightDirection(p), Math.random());
         for (Surface i : surfaces) {
@@ -95,6 +104,7 @@ public class Scene {
 
     }
 
+    // progress bar
     public void progress(int c, int t) {
         if (c % ((int) t / 20) == 0) {
             System.out.print("\b".repeat(20) + "█".repeat((int) c * 20 / t + 1)
@@ -108,8 +118,8 @@ public class Scene {
     }
 
     public ColorImage render(int xRes, int yRes, int numSamples, boolean showProgress) {
-        print("schild rad:", schild);
-        print("max light dist:", scaledC * maxIterations);
+        System.out.println("schild rad: " + schild);
+        System.out.println("max light dist: " + scaledC * maxIterations);
         int aaRes = (int) Math.sqrt(numSamples);
         ColorImage img = new ColorImage(xRes, yRes);
         for (int x = 0; x < xRes; x++) {
@@ -132,10 +142,13 @@ public class Scene {
                         // cast ray
                         Ray ray = camera.generateRay(u, v);
                         Color sample = null;
+                        // apply universal gravitation to ray maxIterations times
                         for (int step = 0; step < maxIterations; step++) {
                             for (Surface s : surfaces) {
                                 Intersection sect = s.intersect(ray);
                                 if (sect != null) {
+                                    // check if intersection is close enough to the light
+                                    // point that it will occur in the next timestep
                                     if (ray.getPosition().getDist(sect.getPosition()) <= scaledC) {
                                         sample = computeVisibleColor(ray, 0);
                                     }
@@ -144,21 +157,26 @@ public class Scene {
                             if (sample != null) {
                                 break;
                             }
-                            Vector rayVector = ray.getDirection().scale(scaledC);
 
-                            // .normalize().scale(speedOfLight / timeScale);
+                            // old ray
+                            Vector rayVector = ray.getDirection().scale(scaledC);
                             Point rayPoint = ray.getPosition();
 
                             double dist = rayPoint.getDist(blackHolePosition);
-                            // why do i need to square the time scale
+                            // time scale needs to be squared because
+                            // acceleration is measured in m/s^2
                             double gravityAccel = ((G * blackHoleMass) / Math.pow(dist, 2.0))
                                     / Math.pow(timeScale, 2);
+
+                            // vector to black hole scaled by gravity
                             Vector gravityVector = blackHolePosition.subtract(rayPoint)
                                     .normalize().scale(gravityAccel);
 
+                            // ray vector for next step
                             Vector newRayVector = rayVector.add(gravityVector)
                                     .normalize().scale(scaledC);
 
+                            // move ray forward for next step
                             Point newRayPoint = rayPoint.add(rayVector);
                             // Point newRayPoint = rayPoint.add(newRayVector);
 
@@ -181,11 +199,13 @@ public class Scene {
         return img;
     }
 
-    public static void print(Object... args) {
-        String s = "";
-        for (int i = 0; i < args.length; i++) {
-            s += i != 0 ? ", " + args[i] : args[i];
-        }
-        System.out.println(s);
-    }
+    // debug ----
+    // System.out.println is too much typing
+    // public static void print(Object... args) {
+    // String s = "";
+    // for (int i = 0; i < args.length; i++) {
+    // s += i != 0 ? ", " + args[i] : args[i];
+    // }
+    // System.out.println(s);
+    // }
 }

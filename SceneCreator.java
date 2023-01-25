@@ -25,10 +25,10 @@ public class SceneCreator {
                 // Surface d1 = new Ring(Scene.blackHolePosition,
                 // Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
                 // new Lambert(new Color(1, 1, 1)));
-                Surface d1 = new Ring(Scene.blackHolePosition,
-                                Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
-                                new ImageLambert("./assets/image23.png"));
-                s.addSurface(d1);
+                // Surface d1 = new Ring(Scene.blackHolePosition,
+                // Scene.schild * 3, Scene.schild, new Vector(0, 1, .1),
+                // new ImageLambert("./assets/image23.png"));
+                // s.addSurface(d1);
                 Surface d2 = new Ring(new Point(0, 0, Scene.blackHolePosition.getZ() * 4),
                                 Scene.schild * 23, 0, new Vector(0, 0, 1),
                                 new ImageLambert("./assets/grid3.png"));

@@ -41,12 +41,15 @@ public class Ring extends Surface {
             // polar coords
             Vector polarVector = inter.subtract(center);
             double dist = polarVector.length() / r1;
+
+            //sets a rotation for the texture on the ring
             Vector rot = new Vector(1, 0, 0);
             double angle = Math.acos(polarVector.normalize().dot(rot));
+
+            // UV coordinates on the image
             double X = (Math.cos(angle) * dist + 1) / 2;
             double Y = (Math.sin(angle) * dist + 1) / 2;
 
-            // System.out.println(angle);
 
             if (length < r1 && length > r2) {
                 if (normal.dot(ray.getDirection()) > 0) {
